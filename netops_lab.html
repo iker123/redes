@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NETOPS LAB · UDABOL — Misión de Gestión de Red</title>
+<style>
+:root{--bg:#07101c;--panel:#0e1a2b;--panel2:#12233a;--line:#29415f;--text:#edf6ff;--muted:#9db0c7;--cyan:#42d8ff;--green:#3dde8a;--yellow:#ffd166;--red:#ff647c;--purple:#a98cff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0%,#183856 0,#07101c 38%,#040912 100%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:10;background:rgba(4,9,18,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1150px;margin:auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:900;letter-spacing:.08em}.brand span{color:var(--cyan)}.topscore{font-weight:800;color:var(--cyan)}
+main{max-width:1150px;margin:auto;padding:28px 20px 60px}.hidden{display:none!important}
+.card{background:linear-gradient(145deg,rgba(18,35,58,.97),rgba(9,18,31,.97));border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 18px 55px rgba(0,0,0,.22)}
+.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:18px}.eyebrow{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.17em}.hero h1{font-size:clamp(34px,6vw,58px);line-height:.98;margin:10px 0 14px}.lead{font-size:17px;line-height:1.65;color:var(--muted)}
+input,textarea,select{width:100%;background:#071321;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:inherit;outline:none}input:focus,textarea:focus{border-color:var(--cyan)}textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:10px;padding:12px 17px;background:var(--cyan);color:#03101a;font-weight:900;cursor:pointer}button.secondary{background:#172b45;color:var(--text);border:1px solid var(--line)}button.danger{background:var(--red);color:#18050a}button:disabled{opacity:.45;cursor:not-allowed}
+.note{padding:13px 15px;border:1px solid var(--line);border-radius:11px;background:#071321;color:var(--muted);line-height:1.55}.note.warn{border-color:var(--yellow);color:#ffe6a4}.note.good{border-color:var(--green);color:#bdf5d5}.note.bad{border-color:var(--red);color:#ffc3cc}
+.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}.step{padding:12px 7px;text-align:center;border:1px solid var(--line);border-radius:10px;background:#091727;font-size:12px}.step b{display:block;font-size:18px;color:var(--cyan);margin-bottom:4px}
+.concepts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.concept{background:#091727;border:1px solid var(--line);border-radius:12px;padding:15px}.concept h3{margin:0 0 7px}.concept p{color:var(--muted);line-height:1.45;font-size:14px}
+.rules{margin-top:18px}.rules li{margin:9px 0;color:#cbd8e7}
+.company-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.company{cursor:pointer;transition:.2s}.company:hover{transform:translateY(-2px);border-color:var(--cyan)}.company h3{margin:6px 0}.company p{color:var(--muted);line-height:1.45}.tag{display:inline-block;border:1px solid var(--line);padding:5px 8px;border-radius:20px;font-size:11px;color:var(--cyan)}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:18px}.mission-meta{color:var(--muted);font-size:13px}.progress{height:8px;background:#071321;border:1px solid var(--line);border-radius:10px;overflow:hidden}.progress div{height:100%;background:var(--cyan);transition:.3s}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.evidence{cursor:pointer;min-height:130px;transition:.15s}.evidence:hover{border-color:var(--cyan)}.evidence.opened{border-color:var(--purple);box-shadow:0 0 0 1px rgba(169,140,255,.25)}.evidence h3{margin:7px 0}.evidence p{font-size:13px;color:var(--muted);line-height:1.4}.evidence small{color:var(--purple)}
+.incident{border-left:4px solid var(--red);padding:16px;background:#1c111a;border-radius:10px;line-height:1.6}.question{margin-top:16px}.options{display:grid;gap:9px}.option{padding:13px;border:1px solid var(--line);border-radius:10px;background:#071321;cursor:pointer}.option:hover{border-color:#6286aa}.option.selected{border-color:var(--yellow);background:#26351c;box-shadow:0 0 0 1px rgba(255,209,102,.25)}.option.correct{border-color:var(--green);background:#0b2b20}.option.wrong{border-color:var(--red);background:#32141d}
+.scorebox{display:flex;justify-content:space-between;align-items:center;gap:15px;background:#071321;border:1px solid var(--line);padding:14px;border-radius:12px;margin-top:15px}.points{font-size:27px;font-weight:900;color:var(--cyan)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px}.rubric{width:100%;border-collapse:collapse;margin-top:10px}.rubric th,.rubric td{border-bottom:1px solid var(--line);padding:9px;text-align:left;font-size:13px}.rubric th{color:var(--cyan)}
+.final-score{font-size:64px;font-weight:900;color:var(--cyan)}.final-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:15px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:800px){.hero,.two,.final-grid{grid-template-columns:1fr}.company-grid{grid-template-columns:1fr}.concepts{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.evidence-grid{grid-template-columns:1fr 1fr}.nav{padding:12px 14px}}
+
+.review-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:12px}
+.review-step{padding:12px 8px;text-align:center;border:1px solid var(--line);border-radius:11px;background:#091727;color:var(--text);font-weight:800;cursor:pointer;transition:.15s}
+.review-step:hover{border-color:var(--cyan);transform:translateY(-1px)}
+.review-step.active{border-color:var(--cyan);background:#102b43;box-shadow:0 0 0 1px rgba(66,216,255,.2)}
+.review-panel{margin-top:12px;padding:16px;border:1px solid var(--cyan);border-radius:12px;background:#071321;line-height:1.6}
+.review-panel h3{margin:0 0 6px;color:var(--cyan)}
+.review-panel .example{margin-top:10px;padding:11px;border-left:3px solid var(--green);background:#0a1c1a;border-radius:6px}
+@media(max-width:800px){.review-steps{grid-template-columns:repeat(2,1fr)}}
+
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.review-card{width:100%;text-align:left;background:linear-gradient(145deg,#102b25,#0a1918);color:var(--text);border:1px solid #2f6f50;border-radius:14px;padding:16px;cursor:pointer;transition:.2s;position:relative}
+.review-card:hover{transform:translateY(-2px);border-color:var(--green);box-shadow:0 8px 25px rgba(23,133,72,.18)}
+.review-card.active{border-color:var(--red);box-shadow:0 0 0 1px rgba(217,39,46,.35)}
+.review-card .num{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:50%;background:#1b4332;font-weight:900;margin-bottom:8px}
+.review-card h3{margin:3px 0 5px;font-size:16px}
+.review-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}
+.example{margin-top:12px;padding:12px;border-radius:10px;background:#071321;border:1px solid #315b47;color:#cfe9dc;line-height:1.5}
+@media(max-width:800px){.review-grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}}
+.answer-review{display:grid;gap:10px;margin-top:12px}.answer-item{padding:12px;border:1px solid #29415f;border-radius:10px;background:#0a1726}.answer-item strong{display:block;margin-bottom:5px}.answer-item .right{color:#71e3a0}.answer-item .chosen{color:#ffd166}
+
+.field-hint{display:block;font-size:12px;color:var(--muted);margin:4px 0 6px}
+.char-counter{display:block;text-align:right;font-size:11px;color:var(--muted);margin-top:3px}
+.char-counter.ok{color:var(--green);font-weight:700}
+.char-counter.low{color:var(--yellow)}
+.mono{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#040c16;border:1px solid #1d3049;border-radius:8px;padding:9px;display:block;white-space:pre-wrap;color:#9adfff;margin-top:6px}
+</style>
+</head>
+<body>
+<header><div class="nav"><div class="brand">📡 NETOPS <span>LAB</span> · UDABOL <small style="display:block;color:var(--muted);font-size:10px;letter-spacing:0">Docente: Ing. Iver Guerrero Ortiz</small></div><div class="topscore" id="headerScore">0 / 20 pts</div></div></header>
+<main>
+
+<section id="intro">
+<div class="hero">
+<div class="card">
+<div class="eyebrow">GESTIÓN DE RED · PRÁCTICA 01</div>
+<h1>El monitoreo dice que todo está bien.<br><span style="color:var(--cyan)">Tú debes comprobarlo.</span></h1>
+<p class="lead">En esta misión trabajarás como técnico de gestión de red. No basta con ver un panel de monitoreo "en verde": tendrás que leer el caso, revisar evidencia técnica (SNMP, configuraciones, escaneos), identificar el área de FCAPS afectada y documentar tu diagnóstico.</p>
+<div class="two">
+<label><b>Grupo</b>
+<select id="groupName">
+<option value="">Selecciona tu grupo</option>
+<option>Grupo 1</option><option>Grupo 2</option><option>Grupo 3</option>
+<option>Grupo 4</option><option>Grupo 5</option><option>Grupo 6</option>
+<option>Grupo 7</option><option>Grupo 8</option>
+</select></label>
+<label><b>Integrantes / nombre del técnico</b>
+<input id="studentName" placeholder="Nombres de los integrantes"></label>
+</div>
+<div style="margin-top:13px"><button onclick="start()">ENTRAR AL NETOPS LAB →</button></div>
+</div>
+<div class="card">
+<div class="eyebrow">ANTES DE EMPEZAR · RECORDATORIO</div>
+<div class="concepts" style="grid-template-columns:repeat(3,1fr)">
+<button type="button" class="concept review-card" onclick="showReview('snmp',this)"><h3>📡 SNMP</h3><p>Protocolo para monitorear y gestionar dispositivos de red.</p></button>
+<button type="button" class="concept review-card" onclick="showReview('community',this)"><h3>🔑 Community String</h3><p>La "contraseña" que usa SNMP para dar acceso de lectura/escritura.</p></button>
+<button type="button" class="concept review-card" onclick="showReview('fcaps',this)"><h3>🧩 FCAPS</h3><p>Las 5 áreas de la gestión de red: Fallas, Config., Contabilidad, Rendimiento, Seguridad.</p></button>
+</div>
+</div>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="eyebrow">LO QUE YA APRENDISTE</div>
+<h2 style="margin:0">Repaso de conceptos</h2>
+<p class="lead" style="font-size:14px;margin:8px 0 0">Haz clic en cada concepto para recordar qué significa y ver un ejemplo aplicado a gestión de red.</p>
+<div class="review-grid">
+<button type="button" class="review-card" onclick="showReview('fallas',this)">
+<span class="num">01</span><h3>🚨 Fallas (Fault)</h3><p>Detectar, aislar y corregir problemas que afectan el funcionamiento de la red.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('config',this)">
+<span class="num">02</span><h3>⚙️ Configuración</h3><p>Controlar y registrar los cambios de configuración de los dispositivos.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('contabilidad',this)">
+<span class="num">03</span><h3>📊 Contabilidad (Accounting)</h3><p>Medir el uso de los recursos de red por usuario, área o servicio.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('rendimiento',this)">
+<span class="num">04</span><h3>⚡ Rendimiento (Performance)</h3><p>Medir y optimizar el desempeño: latencia, ancho de banda, throughput.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('seguridad',this)">
+<span class="num">05</span><h3>🔒 Seguridad (Security)</h3><p>Controlar el acceso y proteger la red frente a amenazas.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('snmpwalk',this)">
+<span class="num">06</span><h3>🧪 snmpwalk</h3><p>Comando para recorrer y leer toda la información que expone un agente SNMP.</p>
+</button>
+</div>
+<div class="section-title-uda" style="margin-top:20px"><h2 style="margin:0;font-size:21px">Del concepto al trabajo del técnico</h2></div>
+<div class="review-steps">
+<button type="button" class="review-step" onclick="showReview('riesgo',this)">1 · Riesgo</button>
+<button type="button" class="review-step" onclick="showReview('controlred',this)">2 · Control</button>
+<button type="button" class="review-step" onclick="showReview('evidencia',this)">3 · Evidencia</button>
+<button type="button" class="review-step" onclick="showReview('prueba',this)">4 · Prueba</button>
+<button type="button" class="review-step" onclick="showReview('resultado',this)">5 · Resultado</button>
+<button type="button" class="review-step" onclick="showReview('hallazgo',this)">6 · Hallazgo</button>
+</div>
+<div id="reviewPanel" class="review-panel">
+<h3>📚 Repaso rápido</h3>
+<p>Haz clic en cualquiera de los conceptos para leer una explicación y un ejemplo antes de comenzar la misión.</p>
+</div>
+<ul class="rules">
+<li>🔎 <b>No todo dato es evidencia útil.</b> Debes analizar qué demuestra realmente cada elemento técnico.</li>
+<li>🧩 <b>Puede haber pistas que distraen.</b> No elijas una conclusión solo porque un dato parezca importante.</li>
+<li>⚠️ <b>Un monitoreo puede existir y aun así no funcionar bien.</b></li>
+<li>📄 <b>Tu diagnóstico debe apoyarse en evidencia técnica, no en suposiciones.</b></li>
+<li>🛡️ <b>Todo lo que ves aquí es simulado.</b> Ninguna IP ni red de este laboratorio es real.</li>
+</ul>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="eyebrow">VALOR DE LA ACTIVIDAD</div>
+<h2 style="margin:8px 0">20 puntos</h2>
+<table class="rubric">
+<tr><th>Componente</th><th>Puntos</th></tr>
+<tr><td>Análisis de evidencias</td><td>4</td></tr>
+<tr><td>Identificación del área FCAPS</td><td>4</td></tr>
+<tr><td>Comando / prueba de diagnóstico</td><td>4</td></tr>
+<tr><td>Diagnóstico y justificación</td><td>4</td></tr>
+<tr><td>Hallazgo y recomendación</td><td>4</td></tr>
+</table>
+</div>
+</section>
+
+<section id="choose" class="hidden">
+<div class="card">
+<div class="eyebrow">MISIÓN DE GRUPO</div>
+<h1 style="font-size:38px;margin:8px 0">Elijan su escenario de red</h1>
+<p class="lead">Cada grupo escogerá <b>un solo escenario</b>. No elijan solo por el nombre: cada caso contiene información que puede llevar a conclusiones equivocadas.</p>
+<div class="company-grid" id="companies"></div>
+</div>
+</section>
+
+<section id="mission" class="hidden">
+<div class="header-row">
+<div><div class="eyebrow" id="missionNo"></div><h1 style="font-size:34px;margin:5px 0" id="missionTitle"></h1><div class="mission-meta" id="missionMeta"></div></div>
+<div style="text-align:right"><div class="points" id="livePoints">0 / 20</div><div class="mission-meta">puntos</div></div>
+</div>
+<div class="progress"><div id="bar" style="width:0%"></div></div>
+
+<div class="card" style="margin-top:18px">
+<div class="eyebrow">FASE 01 · CONTEXTO</div>
+<div id="context"></div>
+<div class="incident" style="margin-top:15px" id="incident"></div>
+</div>
+
+<div class="card question">
+<div class="eyebrow">FASE 02 · INVESTIGACIÓN</div>
+<h2 style="margin:7px 0">📂 Sala de evidencias técnicas</h2>
+<p class="mission-meta">Abre las evidencias que consideres necesarias. Algunas contienen datos útiles y otras pueden ser irrelevantes para el diagnóstico.</p>
+<div class="evidence-grid" id="evidence"></div>
+<div id="detail" class="note hidden" style="margin-top:13px"></div>
+</div>
+
+<div class="card question">
+<div class="eyebrow">FASE 03 · ANÁLISIS</div>
+<h2 style="margin:7px 0">¿Qué área de FCAPS está comprometida?</h2>
+<p id="controlPrompt"></p>
+<div class="options" id="controlOptions"></div>
+<div id="controlFeedback" class="note hidden" style="margin-top:12px"></div>
+</div>
+
+<div class="card question">
+<div class="eyebrow">FASE 04 · PRUEBA</div>
+<h2 style="margin:7px 0">Diseña tu prueba de diagnóstico</h2>
+<p id="testPrompt"></p>
+<div class="options" id="testOptions"></div>
+<div id="testFeedback" class="note hidden" style="margin-top:12px"></div>
+</div>
+
+<div class="card question">
+<div class="eyebrow">FASE 05 · DIAGNÓSTICO</div>
+<h2 style="margin:7px 0">¿Qué concluyes?</h2>
+<div class="options" id="verdictOptions"></div>
+<div id="verdictFeedback" class="note hidden" style="margin-top:12px"></div>
+</div>
+
+<div class="card question paper-work">
+<div class="eyebrow">FASE 06 · PAPEL DE TRABAJO</div>
+<h2 style="margin:7px 0">Documenta el hallazgo</h2>
+<p class="paper-help">Redacta cada elemento con base en las evidencias revisadas. <b>Mínimo 30 caracteres por campo.</b></p>
+<div class="two">
+<label><b>Condición</b><span class="field-hint">Qué encontraste · mínimo 30 caracteres</span><textarea id="condition" minlength="30" placeholder="Describe el hecho o situación encontrada con evidencia."></textarea><small class="char-counter" id="conditionCount">0/30</small></label>
+<label><b>Criterio</b><span class="field-hint">Qué debería ocurrir · mínimo 30 caracteres</span><textarea id="criterion" minlength="30" placeholder="Indica la norma, política o configuración esperada."></textarea><small class="char-counter" id="criterionCount">0/30</small></label>
+<label><b>Causa o posible causa</b><span class="field-hint">Por qué podría ocurrir · mínimo 30 caracteres</span><textarea id="cause" minlength="30" placeholder="Explica la causa solo si existe evidencia suficiente; de lo contrario, indícalo."></textarea><small class="char-counter" id="causeCount">0/30</small></label>
+<label><b>Efecto / riesgo</b><span class="field-hint">Qué consecuencia puede producir · mínimo 30 caracteres</span><textarea id="effect" minlength="30" placeholder="Explica la consecuencia o riesgo que podría producirse."></textarea><small class="char-counter" id="effectCount">0/30</small></label>
+</div>
+<label style="display:block;margin-top:12px"><b>Recomendación</b><span class="field-hint">Qué mejora propones · mínimo 30 caracteres</span><textarea id="recommendation" minlength="30" placeholder="Propón una mejora concreta y relacionada con el hallazgo."></textarea><small class="char-counter" id="recommendationCount">0/30</small></label>
+<div class="note warn" style="margin-top:13px">⚠️ No inventes información. Si una causa no está demostrada por las evidencias, puedes escribir: <b>“No se cuenta con evidencia suficiente para determinar la causa.”</b></div>
+<div style="margin-top:15px"><button onclick="submitMission()">FINALIZAR Y GENERAR DIAGNÓSTICO</button></div>
+<div id="submitMsg" class="note hidden" style="margin-top:12px"></div>
+</div>
+</section>
+
+<section id="final" class="hidden">
+<div class="card">
+<div class="eyebrow">PAPEL DE TRABAJO · RESULTADO</div>
+<h1 style="font-size:42px;margin:8px 0">Misión completada</h1>
+<p class="lead" id="finalIntro"></p>
+<div class="final-grid">
+<div class="card"><div class="eyebrow">PUNTAJE</div><div class="final-score" id="finalScore"></div><p id="finalBreakdown"></p></div>
+<div class="card"><div class="eyebrow">DIAGNÓSTICO</div><h2 id="finalVerdict"></h2><p id="finalSummary" class="lead"></p></div>
+</div>
+<div class="card" style="margin-top:15px">
+<div class="eyebrow">RETROALIMENTACIÓN FINAL</div>
+<h3>🔎 Revisión del análisis</h3>
+<div id="finalReview"></div>
+</div>
+<div class="note good" style="margin-top:15px">🔒 Esta misión ya fue registrada. Al recargar la página, el laboratorio conservará el resultado y no permitirá iniciar una nueva misión desde este dispositivo.</div>
+</div>
+</section>
+</main>
+<footer>NETOPS LAB · UDABOL · Actividad práctica — 20 puntos<br><b>Docente: Ing. Iver Guerrero Ortiz</b></footer>
+
+<script>
+/* ===== CONFIGURACIÓN =====
+   Pega aquí la URL /exec de tu NUEVA Web App de Google Apps Script
+   (separada de la de Auditoría de Sistemas).
+   Ejemplo: https://script.google.com/macros/s/XXXXXXXX/exec
+*/
+const GOOGLE_SCRIPT_URL = "PEGAR_AQUI_URL_DE_APPS_SCRIPT";
+
+const companies=[
+{title:"🏭 Planta Industrial ANDES",tag:"SNMP · MONITOREO EXPUESTO",meta:"Monitoreo de sensores vía SNMP",context:"La planta usa SNMP para monitorear temperatura y estado de sus servidores. El administrador asegura que el acceso al monitoreo está protegido y que nadie externo puede leerlo.",incident:"🚨 INCIDENTE: Un pasante conectado a la red interna (10.0.2.0/24) logró leer toda la configuración del agente SNMP del servidor de monitoreo usando la cadena de comunidad por defecto, sin ninguna contraseña especial.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Seguridad (Security) — acceso no controlado al agente SNMP.","Contabilidad (Accounting) — mal cálculo de consumo de datos.","Rendimiento (Performance) — lentitud en la red.","Fallas (Fault) — un dispositivo dejó de responder."],controlCorrect:0,testPrompt:"¿Qué comando permitiría comprobar esta vulnerabilidad de forma segura, dentro de un laboratorio propio?",tests:["snmpwalk -v2c -c public 10.0.2.15","ping -t 10.0.2.15","traceroute 10.0.2.15","nslookup 10.0.2.15"],testCorrect:0,verdict:"critico",evidence:[
+["📋","Política interna","Las cadenas de comunidad (community strings) SNMP deben ser únicas, complejas y nunca usar los valores por defecto (public/private)."],
+["📄","/etc/snmp/snmpd.conf","<span class='mono'>rocommunity public  default\nsyslocation Sala de Servidores\nsyscontact admin@planta.local</span>"],
+["🧪","Resultado de snmpwalk","<span class='mono'>snmpwalk -v2c -c public 10.0.2.15\nSNMPv2-MIB::sysDescr.0 = Linux planta-mon 6.1\nSNMPv2-MIB::sysName.0 = SRV-MONITOREO\nIF-MIB::ifDescr.1 = eth0</span>Se obtuvo información completa del sistema sin credenciales adicionales."],
+["🔎","Escaneo nmap","<span class='mono'>nmap -sU -p161 10.0.2.15\nPORT    STATE SERVICE\n161/udp open  snmp</span>"],
+["🗺️","Diagrama de red","Servidor de monitoreo conectado directamente a la VLAN de usuarios, sin segmentación."],
+["🎫","Ticket de soporte","Ticket #214 · 'Pasante reporta que pudo ver el nombre y la ubicación del servidor desde su equipo, por curiosidad.' Estado: ABIERTO"]]},
+{title:"🏥 Hospital Red Vital",tag:"FALLAS · DISPONIBILIDAD",meta:"Monitoreo de disponibilidad de equipos",context:"El hospital tiene un sistema de monitoreo que debería avisar de inmediato si un switch o servidor crítico deja de responder.",incident:"🚨 INCIDENTE: Un switch del área de emergencias estuvo caído 6 horas durante la madrugada y nadie fue notificado hasta que el personal reportó pérdida de conexión por su cuenta.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Fallas (Fault Management) — el sistema no detectó ni notificó la caída a tiempo.","Contabilidad (Accounting) — error en el cobro del servicio de internet.","Configuración (Configuration) — un técnico cambió una IP sin autorización.","Seguridad (Security) — acceso no autorizado al switch."],controlCorrect:0,testPrompt:"¿Qué prueba ayudaría a verificar si el sistema de monitoreo detecta caídas correctamente?",tests:["Simular la caída de un equipo de prueba (apagarlo) y comprobar si se genera una alerta (trap SNMP) a tiempo.","Revisar el precio de las licencias del software de monitoreo.","Preguntar al personal de limpieza si vio algo raro.","Revisar el logo del sistema de monitoreo."],testCorrect:0,verdict:"parcial",evidence:[
+["📋","Procedimiento esperado","Todo equipo crítico debe generar una alerta (trap SNMP) al área de soporte en menos de 5 minutos de quedar inactivo."],
+["🖥️","Log del sistema de monitoreo","02:14 — switch-emergencias DOWN (sin alerta enviada)\n08:20 — Personal reporta falla de red\n08:25 — Técnico revisa y encuentra el switch apagado desde las 02:14"],
+["⚙️","Configuración del monitor","<span class='mono'>trap-destination: NO CONFIGURADO\npolling-interval: 300s</span>"],
+["📊","Panel de monitoreo","Estado mostrado durante la falla: 'switch-emergencias — Último dato: hace 3 horas' (sin alerta visual)."],
+["🎫","Ticket de soporte","Ticket #881 · Falla detectada por el personal, no por el sistema. Tiempo de inactividad: 6h 11min."],
+["🗺️","Inventario de equipos","El switch-emergencias está marcado como 'crítico — prioridad alta' en el inventario."]]},
+{title:"🏫 Colegio San Marcos",tag:"RENDIMIENTO",meta:"Red de laboratorios de cómputo",context:"Los laboratorios de cómputo del colegio presentan lentitud constante en horas pico. El administrador dice que 'la red siempre ha sido así' y que no hay nada que medir.",incident:"🚨 INCIDENTE: Durante las clases de la tarde, los estudiantes no pueden cargar páginas ni ver videos educativos. No existe ningún registro de cuánto tráfico genera cada laboratorio.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Rendimiento (Performance) — no se mide ni se gestiona el uso del ancho de banda.","Fallas (Fault) — un cable de red está cortado.","Contabilidad (Accounting) — no se cobra correctamente el servicio.","Seguridad (Security) — hay un atacante externo."],controlCorrect:0,testPrompt:"¿Qué prueba permitiría confirmar un problema de rendimiento?",tests:["Consultar los contadores de tráfico por interfaz (ifInOctets / ifOutOctets vía SNMP) durante las horas pico.","Revisar el manual del router sin medir nada.","Preguntar a un solo estudiante si la red 'se siente lenta'.","Revisar el precio del plan de internet contratado."],testCorrect:0,verdict:"parcial",evidence:[
+["📋","Política de red","El ancho de banda disponible debe monitorearse y distribuirse de forma que ningún laboratorio sature la conexión completa."],
+["📊","Contadores SNMP (14:00-15:00)","<span class='mono'>ifInOctets.2 (Lab-A): 8.9 GB\nifInOctets.3 (Lab-B): 0.4 GB\nifInOctets.4 (Administración): 0.3 GB</span>"],
+["🖥️","Dispositivo en Lab-A","Una laptop descargando un archivo de gran tamaño de forma continua durante la clase."],
+["📋","Configuración del router","Sin reglas de QoS (calidad de servicio) configuradas; todo el tráfico tiene la misma prioridad."],
+["🎫","Ticket de soporte","Ticket #432 · 'La red se pone lenta todas las tardes, sobre todo cuando hay clase en el Lab-A.'"],
+["🗺️","Diagrama de red","Todos los laboratorios comparten el mismo enlace de salida a Internet sin límites individuales."]]},
+{title:"🏢 Oficinas Central Corp",tag:"CONFIGURACIÓN",meta:"Cambios no autorizados en equipos de red",context:"La empresa exige que todo cambio de configuración en routers y switches pase por un proceso de aprobación y quede documentado.",incident:"🚨 INCIDENTE: Un router dejó de enrutar correctamente el tráfico de una sucursal después de que apareciera una configuración distinta a la documentada oficialmente. Nadie registró haber hecho el cambio.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Configuración (Configuration Management) — un cambio no autorizado ni documentado.","Rendimiento (Performance) — el enlace está saturado.","Contabilidad (Accounting) — mal cálculo de consumo de datos.","Fallas (Fault) — un cable físico se dañó."],controlCorrect:0,testPrompt:"¿Qué prueba ayudaría a identificar el origen del cambio?",tests:["Comparar la configuración actual contra el respaldo documentado y revisar el historial de accesos/cambios (log o syslog).","Reiniciar el router sin revisar nada más.","Preguntar únicamente al proveedor de internet.","Cambiar la contraseña del wifi de la oficina."],testCorrect:0,verdict:"critico",evidence:[
+["📋","Procedimiento de cambios","Todo cambio de configuración debe solicitarse, aprobarse y registrarse antes de aplicarse en un equipo de producción."],
+["📄","Configuración documentada (respaldo oficial)","<span class='mono'>interface eth0\n ip route 192.168.10.0/24 via 192.168.1.1</span>"],
+["📄","Configuración actual encontrada","<span class='mono'>interface eth0\n ip route 192.168.10.0/24 via 192.168.1.254</span>Ruta distinta a la documentada."],
+["🖥️","Log de acceso remoto","03:47 — Acceso SSH exitoso desde 192.168.1.80 (usuario: tecnico02)<br>No existe ticket ni solicitud asociada a esa hora."],
+["🎫","Solicitud de cambio","Búsqueda en el sistema de tickets: <b>NO ENCONTRADA</b> para esa fecha."],
+["👤","Perfil tecnico02","Rol: Soporte N1<br>Permiso de modificar routers de producción: <b>debería requerir aprobación de un supervisor</b>"]]},
+{title:"🛒 Cadena RetailPlus",tag:"CONTABILIDAD (ACCOUNTING)",meta:"Consumo de datos por sucursal",context:"La empresa paga un enlace dedicado de internet y distribuye el costo entre sus sucursales según el consumo real de cada una, medido por el equipo de red.",incident:"🚨 INCIDENTE: La sucursal Norte fue facturada por un consumo de datos mucho mayor al que sus propios empleados reportan usar. El área de contabilidad pide una explicación técnica antes de pagar.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Contabilidad (Accounting Management) — el consumo registrado no corresponde al uso real.","Seguridad (Security) — hubo un acceso no autorizado a los documentos contables.","Fallas (Fault) — el enlace de internet está caído.","Configuración (Configuration) — un router perdió su configuración."],controlCorrect:0,testPrompt:"¿Qué prueba permitiría verificar el consumo real de la sucursal Norte?",tests:["Revisar los contadores de tráfico (ifOutOctets) de la interfaz de esa sucursal vía SNMP y compararlos con la factura.","Aceptar la factura del proveedor sin revisar ningún dato interno.","Preguntar a un solo empleado cuánto cree que navega al día.","Revisar el color del gabinete del router."],testCorrect:0,verdict:"parcial",evidence:[
+["📋","Política de distribución de costos","El costo del enlace se distribuye según el tráfico real medido en la interfaz de cada sucursal, obtenido por SNMP."],
+["📊","Contador SNMP — Sucursal Norte","<span class='mono'>ifOutOctets (últimos 30 días): 410 GB</span>"],
+["🧾","Factura interna enviada a Norte","Consumo facturado: <b>900 GB</b> — no coincide con el contador SNMP."],
+["🖥️","Dispositivo adicional detectado","Un punto de acceso Wi-Fi no autorizado conectado a la red de la sucursal Norte, usado también por un local vecino."],
+["🎫","Ticket de soporte","Ticket #309 · 'La facturación de Norte no coincide con lo que reportamos.'"],
+["⚙️","Configuración del sistema de facturación","El cálculo se hace manualmente una vez al mes, sin automatizar la lectura de los contadores SNMP."]]},
+{title:"🏦 Banco Cooperativo",tag:"SEGURIDAD · SNMP EXPUESTO",meta:"Gestión de red de agencia",context:"El banco asegura que ningún servicio de administración de sus equipos de red es accesible desde fuera de su red interna.",incident:"🚨 INCIDENTE: Durante una revisión interna de rutina (dentro del propio laboratorio de pruebas del banco, con autorización), se encontró que el puerto SNMP de un switch respondía con la cadena de comunidad por defecto, permitiendo leer toda su configuración.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Seguridad (Security) — un servicio de gestión quedó accesible con credenciales por defecto.","Rendimiento (Performance) — el switch está sobrecargado.","Contabilidad (Accounting) — mal cálculo de transacciones.","Fallas (Fault) — el switch se reinicia solo."],controlCorrect:0,testPrompt:"¿Qué comando, ejecutado de forma autorizada dentro del propio laboratorio, confirma la vulnerabilidad?",tests:["nmap -sU -p161 --script snmp-info 10.0.2.20","nmap -p80,443 10.0.2.20","nmap -O 10.0.2.20","nikto -h 10.0.2.20"],testCorrect:0,verdict:"critico",evidence:[
+["📋","Política de seguridad del banco","Ningún servicio de gestión (SNMP, SSH, Telnet) debe usar credenciales por defecto ni quedar accesible sin control de acceso."],
+["🔎","Resultado de nmap --script snmp-info","<span class='mono'>161/udp open snmp\n| snmp-info:\n|   sysDescr: Switch-Core-01\n|   location: Agencia Centro\n|_  contact: admin@banco.local</span>"],
+["📄","Configuración del switch","<span class='mono'>snmp-server community public RO\nsnmp-server community private RW</span>La comunidad 'private' permite incluso escritura (RW)."],
+["🗺️","Diagrama de red","El switch de agencia está conectado a la misma VLAN que los cajeros automáticos."],
+["🧪","Intento de snmpwalk con 'private'","Se pudo leer y, en teoría, modificar parámetros de configuración del switch — confirmado solo en el laboratorio de pruebas autorizado."],
+["🎫","Hallazgo de la revisión interna","Registrado en el laboratorio de pruebas. Nunca se ejecutó contra la red de producción real del banco."]]}
+];
+
+let name="",company=null,companyIndex=null,opened=0,answers={control:false,test:false,verdict:false,controlIndex:null,testIndex:null,verdictValue:null},score=0,submitted=false;
+function show(id){["intro","choose","mission","final"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
+function start(){
+const g=document.getElementById("groupName").value;
+name=document.getElementById("studentName").value.trim();
+if(!g){alert("Selecciona tu grupo.");return}
+if(!name){alert("Escribe los nombres de los integrantes.");return}
+const saved=JSON.parse(localStorage.getItem("netopsLab_"+g)||"null");
+if(saved && saved.submitted){
+restoreSubmitted(saved);
+return;
+}
+if(saved && saved.started){
+if(!confirm("Este grupo ya tiene una misión iniciada en este dispositivo. ¿Desean continuarla?")) return;
+restoreActive(saved);
+return;
+}
+saveState({started:true,submitted:false,group:g,name,score:0});
+renderCompanies();show("choose");
+}
+function renderCompanies(){document.getElementById("companies").innerHTML=companies.map((c,i)=>`<div class="card company" onclick="selectCompany(${i})"><span class="tag">${c.tag}</span><h3>${c.title}</h3><p>${c.meta}</p><p>${c.context}</p><button class="secondary">INVESTIGAR ESTE CASO →</button></div>`).join("");}
+function selectCompany(i){
+companyIndex=i; company=companies[i]; score=0; opened=0;
+answers={control:false,test:false,verdict:false,controlIndex:null,testIndex:null,verdictValue:null};
+saveState({started:true,submitted:false,group:document.getElementById("groupName").value,name,companyIndex:i,opened,answers,score});
+renderMission();show("mission");
+}
+function renderMission(){
+document.getElementById("headerScore").textContent=`PROGRESO`;
+document.getElementById("livePoints").textContent=`EN ANÁLISIS`;
+document.getElementById("missionNo").textContent=`MISIÓN · ${company.tag}`;
+document.getElementById("missionTitle").textContent=company.title;
+document.getElementById("missionMeta").textContent=company.meta;
+document.getElementById("bar").style.width="0%";
+document.getElementById("context").innerHTML=`<p>${company.context}</p>`;
+document.getElementById("incident").innerHTML=company.incident;
+document.getElementById("evidence").innerHTML=company.evidence.map((e,i)=>`<div class="card evidence" onclick="openEvidence(${i})"><div style="font-size:25px">${e[0]}</div><h3>${e[1]}</h3><p>Haz clic para revisar</p><small>EVIDENCIA ${i+1}</small></div>`).join("");
+document.getElementById("detail").className="note hidden";
+document.getElementById("controlPrompt").textContent=company.controlPrompt;
+document.getElementById("controlOptions").innerHTML=company.controls.map((x,i)=>`<div class="option" onclick="pick('control',${i},this)">${String.fromCharCode(65+i)}. ${x}</div>`).join("");
+document.getElementById("testPrompt").textContent=company.testPrompt;
+document.getElementById("testOptions").innerHTML=company.tests.map((x,i)=>`<div class="option" onclick="pick('test',${i},this)">${String.fromCharCode(65+i)}. ${x}</div>`).join("");
+document.getElementById("verdictOptions").innerHTML=[["ok","🟢 Correctamente gestionado"],["parcial","🟡 Parcialmente gestionado / requiere ajuste"],["critico","🔴 Vulnerabilidad o falla crítica"]].map(x=>`<div class="option" onclick="pickVerdict('${x[0]}',this)">${x[1]}</div>`).join("");
+["condition","criterion","cause","effect","recommendation"].forEach(x=>document.getElementById(x).value="");
+document.getElementById("controlFeedback").className="note hidden";document.getElementById("testFeedback").className="note hidden";document.getElementById("verdictFeedback").className="note hidden";document.getElementById("submitMsg").className="note hidden";setupCharacterCounters();
+}
+function openEvidence(i){
+if(!company) return;
+if(!document.querySelectorAll(".evidence")[i].classList.contains("opened")) opened++;
+let e=company.evidence[i];
+let d=document.getElementById("detail");
+d.className="note";d.innerHTML=`<b>${e[0]} ${e[1]}</b><br><br>${e[2]}`;
+document.querySelectorAll(".evidence")[i].classList.add("opened");
+saveCurrentState(); updateBar();
+}
+function pick(type,i,el){
+if(answers[type])return;
+answers[type]=true;
+if(type==="control") answers.controlIndex=i;
+if(type==="test") answers.testIndex=i;
+el.classList.add("selected");
+const f=document.getElementById(type==="control"?"controlFeedback":"testFeedback");
+f.className="note hidden";
+if(i===(type==="control"?company.controlCorrect:company.testCorrect)) score+=4;
+saveCurrentState(); updateScore(); updateBar();
+}
+function pickVerdict(v,el){
+if(answers.verdict)return;
+answers.verdict=true; answers.verdictValue=v;
+el.classList.add("selected");
+if(v===company.verdict) score+=4;
+document.getElementById("verdictFeedback").className="note hidden";
+saveCurrentState(); updateScore(); updateBar();
+}
+function updateScore(){document.getElementById("headerScore").textContent=`PROGRESO`;document.getElementById("livePoints").textContent=`EN ANÁLISIS`;}
+function updateBar(){let pct=Math.min(100,(opened/3)*20+(answers.control?20:0)+(answers.test?20:0)+(answers.verdict?20:0));document.getElementById("bar").style.width=pct+"%";}
+async function submitMission(){
+let vals=["condition","criterion","cause","effect","recommendation"].map(x=>document.getElementById(x).value.trim());
+let group=document.getElementById("groupName").value;
+if(opened<3||!answers.control||!answers.test||!answers.verdict){
+let m=document.getElementById("submitMsg");m.className="note bad";m.textContent="Antes de finalizar: revisa al menos 3 evidencias y completa las tres decisiones de análisis.";return}
+if(vals.some(v=>v.length<30)){
+let m=document.getElementById("submitMsg");m.className="note bad";m.textContent="Cada parte del papel de trabajo debe tener al menos 30 caracteres. Explica tus respuestas con base en las evidencias.";return}
+
+score+=4;
+const payload={
+timestamp:new Date().toISOString(),grupo:group,integrantes:name,escenario:company.title,categoria:company.tag,puntos:score,
+area_fcaps_correcta:answers.controlIndex===company.controlCorrect,prueba_correcta:answers.testIndex===company.testCorrect,
+diagnostico_correcto:answers.verdictValue===company.verdict,evidencias_revisadas:opened,
+condicion:vals[0],criterio:vals[1],causa:vals[2],efecto:vals[3],recomendacion:vals[4],
+diagnostico:company.verdict==="critico"?"VULNERABILIDAD / FALLA CRÍTICA":company.verdict==="parcial"?"PARCIALMENTE GESTIONADO":"CORRECTAMENTE GESTIONADO"
+};
+
+const msg=document.getElementById("submitMsg");
+msg.className="note warn";msg.textContent="📤 Registrando misión...";
+try{
+if(GOOGLE_SCRIPT_URL!=="PEGAR_AQUI_URL_DE_APPS_SCRIPT"){
+await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+}
+submitted=true;
+const saved={started:true,submitted:true,group,name,companyIndex,opened,answers,score,vals,payload};
+localStorage.setItem("netopsLab_"+group,JSON.stringify(saved));
+
+document.getElementById("finalIntro").textContent=`${group} · ${name} · ${company.title}`;
+document.getElementById("finalScore").textContent=`${score}/20`;
+document.getElementById("finalBreakdown").innerHTML=`Resultado obtenido al finalizar la misión. El puntaje se revela únicamente ahora.`;
+document.getElementById("finalVerdict").textContent=company.verdict==="critico"?"🔴 VULNERABILIDAD / FALLA CRÍTICA":company.verdict==="parcial"?"🟡 PARCIALMENTE GESTIONADO":"🟢 CORRECTAMENTE GESTIONADO";
+document.getElementById("finalSummary").textContent="Ahora puedes comparar tus decisiones con las respuestas sustentadas por las evidencias del caso.";
+document.getElementById("finalReview").innerHTML=buildFinalReview(vals);
+msg.className="note good";msg.textContent="✅ Misión registrada correctamente.";
+show("final");
+}catch(err){
+msg.className="note bad";msg.textContent="❌ No se pudo registrar la misión. No cierres la página y avisa al docente.";
+}
+}
+
+function buildFinalReview(vals){
+const c=company.controlCorrect, t=company.testCorrect, v=company.verdict;
+const chosenC=answers.controlIndex, chosenT=answers.testIndex, chosenV=answers.verdictValue;
+const controlText=company.controls[chosenC]||"Sin respuesta";
+const correctControl=company.controls[c];
+const testText=company.tests[chosenT]||"Sin respuesta";
+const correctTest=company.tests[t];
+const verdictText={ok:"🟢 Correctamente gestionado",parcial:"🟡 Parcialmente gestionado",critico:"🔴 Vulnerabilidad o falla crítica"};
+return `<div class="answer-review">
+<div class="answer-item"><strong>1. Área FCAPS</strong><span class="chosen">Tu respuesta: ${controlText}</span><br><span class="right">Respuesta sustentada: ${correctControl}</span></div>
+<div class="answer-item"><strong>2. Prueba</strong><span class="chosen">Tu respuesta: ${testText}</span><br><span class="right">Prueba sustentada: ${correctTest}</span></div>
+<div class="answer-item"><strong>3. Diagnóstico</strong><span class="chosen">Tu respuesta: ${verdictText[chosenV]||"Sin respuesta"}</span><br><span class="right">Diagnóstico sustentado: ${verdictText[v]}</span></div>
+<div class="answer-item"><strong>4. Evidencias revisadas</strong>${opened} de ${company.evidence.length}</div>
+<div class="answer-item"><strong>5. Papel de trabajo</strong><p><b>Condición:</b> ${vals[0]}</p><p><b>Criterio:</b> ${vals[1]}</p><p><b>Causa:</b> ${vals[2]}</p><p><b>Efecto:</b> ${vals[3]}</p><p><b>Recomendación:</b> ${vals[4]}</p></div>
+</div>`;
+}
+
+function setupCharacterCounters(){
+const ids=["condition","criterion","cause","effect","recommendation"];
+ids.forEach(id=>{
+  const el=document.getElementById(id), counter=document.getElementById(id+"Count");
+  if(!el||!counter)return;
+  const update=()=>{
+    const n=el.value.trim().length;
+    counter.textContent=n+"/30";
+    counter.className="char-counter "+(n>=30?"ok":"low");
+  };
+  el.addEventListener("input",update);
+  update();
+});
+}
+function saveCurrentState(){
+const group=document.getElementById("groupName")?.value;
+if(!group||!company)return;
+const vals=["condition","criterion","cause","effect","recommendation"].map(x=>document.getElementById(x)?.value||"");
+localStorage.setItem("netopsLab_"+group,JSON.stringify({started:true,submitted:false,group,name,companyIndex,opened,answers,score,vals}));
+}
+function saveState(x){localStorage.setItem("netopsLab_"+x.group,JSON.stringify(x));}
+function restoreActive(saved){
+name=saved.name; companyIndex=saved.companyIndex; company=companies[companyIndex]; opened=saved.opened||0; answers=saved.answers||answers; score=saved.score||0;
+document.getElementById("studentName").value=name; document.getElementById("groupName").value=saved.group;
+renderMission(); show("mission");
+(saved.vals||[]).forEach((v,i)=>{const id=["condition","criterion","cause","effect","recommendation"][i];if(document.getElementById(id))document.getElementById(id).value=v;});
+if(company) [...document.querySelectorAll(".evidence")].forEach((el,i)=>{if(i<opened)el.classList.add("opened");});
+restoreSelections(); updateScore(); updateBar();
+}
+function restoreSelections(){
+if(answers.controlIndex!==null&&answers.controlIndex!==undefined) document.querySelectorAll("#controlOptions .option")[answers.controlIndex]?.classList.add("selected");
+if(answers.testIndex!==null&&answers.testIndex!==undefined) document.querySelectorAll("#testOptions .option")[answers.testIndex]?.classList.add("selected");
+if(answers.verdictValue){const map={ok:0,parcial:1,critico:2};document.querySelectorAll("#verdictOptions .option")[map[answers.verdictValue]]?.classList.add("selected");}
+}
+function restoreSubmitted(saved){
+name=saved.name;companyIndex=saved.companyIndex;company=companies[companyIndex];opened=saved.opened||0;answers=saved.answers||answers;score=saved.score||0;
+document.getElementById("studentName").value=name;document.getElementById("groupName").value=saved.group;
+document.getElementById("finalIntro").textContent=`${saved.group} · ${name} · ${company.title}`;
+document.getElementById("finalScore").textContent=`${score}/20`;
+document.getElementById("finalBreakdown").textContent="Esta misión ya fue enviada. El resultado se conserva aunque se recargue la página.";
+document.getElementById("finalVerdict").textContent=company.verdict==="critico"?"🔴 VULNERABILIDAD / FALLA CRÍTICA":company.verdict==="parcial"?"🟡 PARCIALMENTE GESTIONADO":"🟢 CORRECTAMENTE GESTIONADO";
+document.getElementById("finalSummary").textContent="Las respuestas y la retroalimentación ya fueron reveladas al finalizar.";
+document.getElementById("finalReview").innerHTML=buildFinalReview(saved.vals||["","","","",""]);
+show("final");
+}
+
+const reviewData={
+snmp:{
+title:"📡 ¿Qué es SNMP?",
+text:"SNMP (Simple Network Management Protocol) es el protocolo estándar que usan los equipos de red (routers, switches, servidores) para reportar su estado y permitir que sean monitoreados o configurados de forma remota.",
+example:"Un sistema de monitoreo usa SNMP para preguntarle cada 5 minutos a un switch cuánto tráfico pasó por cada uno de sus puertos."
+},
+community:{
+title:"🔑 ¿Qué es una Community String?",
+text:"Es el valor que funciona como 'contraseña' en SNMPv1/v2c: quien la conoce puede leer (modo RO) o incluso modificar (modo RW) la configuración del dispositivo. Los valores por defecto son 'public' (lectura) y 'private' (escritura), y dejarlos sin cambiar es una vulnerabilidad grave.",
+example:"Si un switch sigue usando 'public' como community string, cualquiera en esa red puede leer toda su configuración con un simple snmpwalk."
+},
+fcaps:{
+title:"🧩 ¿Qué es FCAPS?",
+text:"Es el modelo que organiza la gestión de red en 5 áreas: Fallas (Fault), Configuración (Configuration), Contabilidad (Accounting), Rendimiento (Performance) y Seguridad (Security).",
+example:"Cuando un switch se cae, es un problema de Fallas. Cuando alguien cambia su configuración sin permiso, es un problema de Configuración."
+},
+fallas:{
+title:"🚨 ¿Qué es la gestión de FALLAS (Fault)?",
+text:"Es el área de FCAPS encargada de detectar, aislar, registrar y corregir los problemas que afectan el funcionamiento normal de la red.",
+example:"Un switch deja de responder y el sistema de monitoreo debería generar automáticamente una alerta (trap SNMP) para que el equipo técnico actúe rápido."
+},
+config:{
+title:"⚙️ ¿Qué es la gestión de CONFIGURACIÓN?",
+text:"Es el área de FCAPS encargada de controlar, documentar y autorizar los cambios en la configuración de los dispositivos de red.",
+example:"Antes de cambiar la configuración de un router de producción, el cambio debe solicitarse, aprobarse y quedar registrado."
+},
+contabilidad:{
+title:"📊 ¿Qué es la gestión de CONTABILIDAD (Accounting)?",
+text:"Es el área de FCAPS encargada de medir el uso de los recursos de red (ancho de banda, tiempo de conexión, etc.) por usuario, área o servicio, por ejemplo para fines de facturación.",
+example:"Una empresa mide cuántos GB consume cada sucursal al mes usando los contadores SNMP de sus routers, para distribuir el costo del internet."
+},
+rendimiento:{
+title:"⚡ ¿Qué es la gestión de RENDIMIENTO (Performance)?",
+text:"Es el área de FCAPS encargada de medir y optimizar el desempeño de la red: latencia, ancho de banda disponible, throughput, pérdida de paquetes.",
+example:"Un administrador revisa los contadores de tráfico por interfaz para saber si un enlace está saturado en horas pico."
+},
+seguridad:{
+title:"🔒 ¿Qué es la gestión de SEGURIDAD (Security)?",
+text:"Es el área de FCAPS encargada de controlar el acceso a los dispositivos de red y protegerlos frente a accesos no autorizados o configuraciones débiles.",
+example:"Cambiar la community string SNMP por defecto y restringir qué direcciones IP pueden consultarla es parte de la gestión de seguridad."
+},
+snmpwalk:{
+title:"🧪 ¿Qué es snmpwalk?",
+text:"Es un comando que recorre (camina) todo el árbol de información (MIB) que expone un agente SNMP, mostrando todos los valores disponibles: nombre del sistema, interfaces, tráfico, ubicación, etc.",
+example:"snmpwalk -v2c -c public 10.0.2.15 muestra toda la información que el dispositivo 10.0.2.15 expone con la comunidad 'public'."
+},
+riesgo:{
+title:"🔴 ¿Qué es un RIESGO?",
+text:"Es una situación o evento que podría afectar la disponibilidad, el rendimiento o la seguridad de la red. En gestión de red preguntamos qué podría salir mal y qué consecuencia tendría.",
+example:"Ejemplo: si un agente SNMP sigue usando la community string por defecto, existe el riesgo de que cualquier persona en la red lea o modifique su configuración."
+},
+controlred:{
+title:"🛡️ ¿Qué es un CONTROL en gestión de red?",
+text:"Es una medida, regla o configuración diseñada para prevenir, detectar o corregir un riesgo relacionado con la red. Puede estar en una política, un procedimiento o dentro de la configuración de un equipo.",
+example:"Ejemplo: configurar una community string única y restringir por IP quién puede consultar el agente SNMP de un switch."
+},
+evidencia:{
+title:"📄 ¿Qué es una EVIDENCIA técnica?",
+text:"Es la información que el técnico obtiene y utiliza para sustentar un diagnóstico. Debe ser relevante para la prueba que se está realizando; no todo dato demuestra que algo está mal (o bien) configurado.",
+example:"Ejemplo: una salida de snmpwalk puede mostrar exactamente qué información queda expuesta y con qué nivel de acceso."
+},
+prueba:{
+title:"🧪 ¿Qué es una PRUEBA de diagnóstico?",
+text:"Es el procedimiento que realiza el técnico para comprobar si un control existe y funciona como se espera. La prueba debe relacionarse directamente con el riesgo y el área de FCAPS analizada.",
+example:"Ejemplo: ejecutar nmap -sU -p161 --script snmp-info contra un equipo del propio laboratorio para confirmar si expone información sin protección."
+},
+resultado:{
+title:"📊 ¿Qué es un RESULTADO?",
+text:"Es lo que se obtiene después de aplicar la prueba y analizar la evidencia. Permite determinar si el control funcionó, no funcionó, o si la evidencia disponible no permite concluir.",
+example:"Ejemplo: el comando snmpwalk devolvió información completa del sistema sin pedir ninguna credencial adicional. El resultado indica que el control de acceso no está funcionando."
+},
+hallazgo:{
+title:"⚠️ ¿Qué es un HALLAZGO?",
+text:"Es una situación identificada por el técnico que debe documentarse con evidencia y compararse con un criterio (lo que debería ocurrir). Un hallazgo debe explicar qué se encontró, por qué importa y qué debería mejorarse.",
+example:"Ejemplo: se detectó que el agente SNMP de un switch sigue usando la comunidad 'public' por defecto, exponiendo su configuración completa a cualquier equipo de la red interna."
+}
+};
+
+function showReview(key,btn){
+document.querySelectorAll('.review-step').forEach(b=>b.classList.remove('active'));
+if(btn) btn.classList.add('active');
+const d=reviewData[key];
+document.getElementById('reviewPanel').innerHTML=
+`<h3>${d.title}</h3><p>${d.text}</p><div class="example"><b>💡 Ejemplo claro:</b> ${d.example}</div>`;
+}
+
+window.addEventListener("beforeunload",()=>{ if(company && !submitted) saveCurrentState(); });
+</script>
+</body>
+</html>
