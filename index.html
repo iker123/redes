@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOC UDABOL · Centro de Operaciones de Red</title>
+<title>SOC UDABOL · Laboratorio de Escaneo de Vulnerabilidades</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
 <style>
@@ -50,12 +50,10 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .cmdbtn.done{border-color:var(--grn-dim);color:var(--muted);cursor:default}
 .cmdbtn.done:hover{background:none;box-shadow:none}
 .cmdbtn .idx{color:var(--amber);min-width:18px}
-.cmdbtn.key::after{content:" ";}
 .term{background:#010301;border:1px solid var(--line);border-radius:7px;padding:14px;height:340px;overflow-y:auto;font-size:13px;line-height:1.55}
 .term .ln{margin-bottom:10px;white-space:pre-wrap;word-break:break-word}
 .term .prompt{color:var(--grn)}
 .term .out{color:#9fd9ad}
-.term .sys{color:var(--amber)}
 .cursor{display:inline-block;width:8px;height:14px;background:var(--grn);vertical-align:-2px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .topo{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
@@ -92,18 +90,19 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 </head>
 <body>
 <div class="topbar"><div class="in">
-<div class="brandx">▍NOC_UDABOL<small>Centro de Operaciones de Red — Ing. Iver Guerrero Ortiz</small></div>
-<div class="headerscore" id="headerScore">PTS: --/20</div>
+<div class="brandx">▍SOC_UDABOL<small>Laboratorio de Escaneo de Vulnerabilidades — Ing. Iver Guerrero Ortiz</small></div>
+<div class="headerscore" id="headerScore">PTS: --/21</div>
 </div></div>
 
 <div class="wrap">
 
 <section id="intro">
-<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;sesion_noc.sh</div>
+<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;sesion_soc.sh</div>
 <div class="panel">
-<span class="tag">GESTIÓN DE RED · TURNO DE GUARDIA</span>
-<h1 class="big">Esta noche, la red es tuya.</h1>
-<p class="lead">Eres parte del equipo de guardia del NOC (Network Operations Center). Van a llegarte alertas de distintos nodos de la red. Tu trabajo: entrar a cada nodo, correr los comandos correctos desde la consola, leer la salida real, decidir qué área de FCAPS falló y dejar tu reporte técnico antes de cerrar el turno.</p>
+<span class="tag">AUDITORÍA DE SISTEMAS · TURNO DE ESCANEO</span>
+<h1 class="big">Esta noche, cazas vulnerabilidades.</h1>
+<p class="lead">Eres parte del equipo de auditoría del SOC. Van a llegarte alertas de distintos nodos de la red. Tu trabajo: entrar a cada nodo, correr los comandos de <b>nmap</b> y <b>nikto</b> correctos desde la consola, leer la salida real, decidir qué principio de seguridad falló (Confidencialidad, Integridad, Autenticación, Cifrado o Defensa en profundidad) y dejar tu reporte técnico antes de cerrar el turno.</p>
+<div class="note warn" style="margin-top:12px">⚠️ Este turno vale <b>20 puntos</b> y es independiente del <b>mini-informe</b> que te pidió el profesor sobre tu propia red (ese sigue siendo tarea aparte, con la plantilla de la diapositiva de la clase anterior).</div>
 <div class="grid2" style="margin-top:16px">
 <label><b>GRUPO_ID</b>
 <select id="groupName">
@@ -118,40 +117,41 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 <button onclick="start()">&gt; iniciar_turno.sh</button>
 </div>
 
-<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_snmp</div>
+<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_nmap_nikto</div>
 <div class="panel">
 <span class="tag">LECTURA OBLIGATORIA ANTES DEL TURNO</span>
-<h2 style="font-size:24px;margin:8px 0">Páginas de manual — arquitectura SNMP</h2>
+<h2 style="font-size:24px;margin:8px 0">Páginas de manual — nmap y nikto</h2>
 <p class="lead" style="font-size:14px">Haz clic en cada entrada para leer el manual antes de entrar a la consola. Esto es lo que vas a necesitar para interpretar la salida de los comandos.</p>
 <div class="grid3" id="manList"></div>
 <div id="manPanel" class="note" style="margin-top:14px">$ man &lt;tema&gt; — selecciona una entrada arriba para leer su manual.</div>
 </div>
 
-<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_fcaps</div>
+<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_categorias</div>
 <div class="panel">
-<span class="tag">MODELO DE GESTIÓN · FCAPS</span>
-<h2 style="font-size:24px;margin:8px 0">Las 5 áreas que vas a diagnosticar</h2>
-<div class="grid3" id="fcapsList"></div>
-<div id="fcapsPanel" class="note" style="margin-top:14px">$ man fcaps &lt;area&gt; — selecciona un área arriba.</div>
+<span class="tag">PRINCIPIOS DE SEGURIDAD · LO QUE YA VIMOS</span>
+<h2 style="font-size:24px;margin:8px 0">Las 5 categorías que vas a diagnosticar</h2>
+<div class="grid3" id="catList"></div>
+<div id="catPanel" class="note" style="margin-top:14px">$ man categoria &lt;nombre&gt; — selecciona una categoría arriba.</div>
 </div>
 
 <div class="panel noterm">
 <span class="tag">REGLAS DEL TURNO</span>
 <ul style="margin:12px 0 0;padding-left:18px;color:#bfe8cb;line-height:1.9;font-size:14px">
-<li>Cada nodo tiene varios comandos disponibles. Algunos dan evidencia útil, otros son solo ruido — léelos todos antes de decidir.</li>
+<li>Cada nodo tiene varios comandos disponibles. Algunos dan evidencia útil, otros son solo contexto — léelos todos antes de decidir.</li>
 <li>Debes ejecutar al menos <b>3 comandos</b> antes de poder diagnosticar.</li>
 <li>Tu puntaje queda oculto hasta que cierres el turno (envíes el reporte).</li>
-<li>Todos los comandos aquí corren contra equipos simulados de laboratorio (10.0.2.x). <b>Nunca</b> se ejecutan así contra la red real de la UDABOL.</li>
+<li>Todos los comandos aquí corren contra equipos simulados de laboratorio (10.0.2.x). <b>Nunca</b> se ejecutan así contra la red real de la UDABOL ni contra sistemas que no te pertenecen.</li>
 </ul>
 </div>
 
 <div class="panel noterm">
 <span class="tag">PUNTAJE DEL TURNO</span>
-<h2 style="font-size:22px;margin:8px 0">20 puntos</h2>
+<h2 style="font-size:22px;margin:8px 0">20 puntos (+1 bonus)</h2>
 <table class="rubric">
 <tr><th>Componente</th><th>Pts</th></tr>
+<tr><td>Pregunta rápida del nodo (bonus)</td><td>1</td></tr>
 <tr><td>Comandos ejecutados (mínimo 3)</td><td>4</td></tr>
-<tr><td>Área de FCAPS identificada</td><td>4</td></tr>
+<tr><td>Categoría de riesgo identificada</td><td>4</td></tr>
 <tr><td>Comando de diagnóstico clave ejecutado</td><td>4</td></tr>
 <tr><td>Diagnóstico final correcto</td><td>4</td></tr>
 <tr><td>Reporte técnico (informe)</td><td>4</td></tr>
@@ -183,6 +183,12 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 </div>
 
 <div class="panel noterm">
+<span class="tag">PREGUNTA RÁPIDA · +1 PUNTO BONUS</span>
+<h2 style="font-size:19px;margin:8px 0" id="quickPrompt"></h2>
+<div class="optmenu" id="quickOptions"></div>
+</div>
+
+<div class="panel noterm">
 <span class="tag">CONSOLA · comandos disponibles</span>
 <h2 style="font-size:21px;margin:8px 0">Ejecuta comandos para investigar</h2>
 <p class="muted" style="font-size:13px;margin:0 0 10px">Haz clic en un comando de la lista para ejecutarlo. La salida aparece en la terminal de la derecha.</p>
@@ -194,7 +200,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 
 <div class="panel noterm">
 <span class="tag">FASE 2 · ANÁLISIS</span>
-<h2 style="font-size:21px;margin:8px 0">¿Qué área de FCAPS falló?</h2>
+<h2 style="font-size:21px;margin:8px 0">¿Qué categoría de riesgo falló?</h2>
 <p id="controlPrompt" class="muted" style="font-size:13px"></p>
 <div class="optmenu" id="controlOptions"></div>
 </div>
@@ -241,113 +247,133 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 </section>
 
 </div>
-<footer>NOC UDABOL · Gestión de Red — Actividad práctica — 20 puntos · Docente: Ing. Iver Guerrero Ortiz</footer>
+<footer>SOC UDABOL · Auditoría de Sistemas — Actividad práctica — 20 puntos · Docente: Ing. Iver Guerrero Ortiz</footer>
 
 <script>
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbEaHSR7xd0eG8PfX-CMq4T8Ry10Gf0EBfKpW82ZCMjpmMqLIUNZOdWp34USNtbT7a/exec";
 
 const manData = {
-arquitectura:{title:"man agente_manager",text:"SNMP trabaja con dos roles: el AGENTE (ej. el proceso snmpd) vive dentro del dispositivo y guarda datos sobre su propio estado. El MANAGER es el software que le pregunta al agente para monitorear. El manager pregunta, el agente responde.",ex:"snmpwalk -v2c -c public 10.0.2.15  → tu terminal actúa de manager y le pregunta al agente que corre en 10.0.2.15."},
-mib:{title:"man mib",text:"MIB (Management Information Base) es el árbol que organiza todos los datos que un agente puede reportar: nombre, interfaces, tráfico, ubicación, temperatura, etc.",ex:"snmpwalk recorre ese árbol completo, rama por rama, mostrándote cada valor disponible."},
-oid:{title:"man oid",text:"OID (Object Identifier) es la dirección numérica única de un dato dentro del MIB (ej. 1.3.6.1.2.1.1.5.0). Las herramientas traducen ese número a un nombre legible como sysName.",ex:"snmpget -v2c -c public 10.0.2.15 sysName.0 trae solo ese dato puntual, sin recorrer todo el árbol."},
-trap:{title:"man trap",text:"Un trap es un mensaje que el AGENTE envía por su cuenta al manager, sin que nadie pregunte — para avisar de algo urgente (enlace caído, reinicio, temperatura alta).",ex:"Si un switch se cae y nadie configuró el trap-destination, el aviso nunca llega — eso es justamente lo que vas a encontrar en uno de los nodos."},
-versiones:{title:"man versiones",text:"SNMPv1 es la versión original sin seguridad real. SNMPv2c mejora el rendimiento pero sigue mandando la community string sin cifrar — es la más usada y la más vulnerable si se deja en 'public'. SNMPv3 es la única con autenticación y cifrado reales.",ex:"Todos los comandos de este turno usan -v2c, por eso insistimos tanto en no dejar la community string por defecto."},
-puertos:{title:"man puertos",text:"SNMP usa UDP en dos puertos: 161 para consultas (el agente escucha ahí) y 162 para traps (el manager escucha ahí).",ex:"nmap -sU -p161 <IP> confirma si el agente SNMP de ese nodo está activo antes de intentar consultarlo."},
-community:{title:"man community_string",text:"Es la 'contraseña' de SNMPv1/v2c. RO = solo lectura, RW = lectura y escritura. Los valores por defecto 'public' (RO) y 'private' (RW) nunca deben dejarse así en producción.",ex:"Un switch con community 'private' sin cambiar permite que cualquiera no solo lea, sino modifique su configuración."}
+escaneo:{title:"man nmap_basico",text:"Nmap descubre qué puertos están abiertos en un equipo y qué servicio corre en cada uno. -p elige el puerto a revisar, -sV intenta detectar la versión exacta del servicio.",ex:"nmap -sV -p80 10.0.2.22  → dice que el puerto 80 está abierto y qué versión de servidor web corre ahí."},
+scripts:{title:"man nse",text:"El Nmap Scripting Engine (NSE) ejecuta pruebas adicionales sobre un puerto: desde listar archivos compartidos hasta revisar configuraciones inseguras conocidas. Se activa con --script <nombre>.",ex:"nmap --script ftp-anon -p21 10.0.2.15 revisa específicamente si el servidor FTP permite acceso anónimo."},
+nikto:{title:"man nikto",text:"Nikto es un escáner especializado en servidores web: revisa versiones desactualizadas, archivos peligrosos expuestos, configuraciones por defecto y cabeceras de seguridad faltantes.",ex:"nikto -h http://10.0.2.22 analiza el sitio completo y lista cada hallazgo con un '+'."},
+cve:{title:"man cve",text:"Un CVE (Common Vulnerabilities and Exposures) es un identificador público y único para una vulnerabilidad conocida de un software. Si una herramienta detecta una versión con CVE, ya existe una forma documentada de explotarla.",ex:"Apache 2.2.3 tiene varios CVE publicados — por eso Nikto lo marca como 'outdated' automáticamente."},
+compartidos:{title:"man recursos_compartidos",text:"Protocolos como FTP, SMB y NFS permiten compartir archivos entre equipos. Si no exigen usuario y contraseña, o no restringen por IP, cualquiera en la red puede leer — o incluso modificar — esos archivos.",ex:"showmount -e 10.0.2.40 muestra qué carpetas exporta un servidor NFS y a quién se las exporta."},
+principios:{title:"man principios_seguridad",text:"Lo que ya vimos en clases anteriores: CIA (Confidencialidad, Integridad, Disponibilidad), AAA (Autenticación, Autorización, Auditoría) y Defensa en Profundidad (varias capas de protección, no solo una). Hoy usas estos mismos principios para clasificar lo que encuentres.",ex:"Si un panel de administración no usa HTTPS, estás viendo una falla de Cifrado dentro del principio de Confidencialidad."},
+osscan:{title:"man nmap_os",text:"-O le pide a nmap que intente adivinar el sistema operativo del equipo analizando cómo responde su red. Un sistema operativo viejo sin parches es, en sí mismo, un riesgo de Integridad.",ex:"nmap -O 10.0.2.22 → dice que el equipo corre una versión de Linux/CentOS de hace varios años."},
+vulnscript:{title:"man nmap_vuln",text:"--script vuln ejecuta de una sola vez varias pruebas que buscan vulnerabilidades conocidas (CVE) en los servicios detectados. Es más lento, pero da una foto más completa que un solo script suelto.",ex:"nmap -sV --script vuln -p445 10.0.2.31 revisa varias fallas conocidas de SMB en un solo comando."},
+sscan:{title:"man nmap_syn (para practicar en casa)",text:"-sS hace un escaneo SYN ('sigiloso'): envía solo el primer paquete de la conexión sin completarla. Es el que más usan los profesionales, pero necesita permisos de administrador (sudo).",ex:"sudo nmap -sS 10.0.2.15 revisa los puertos sin completar la conexión TCP."},
+allports:{title:"man nmap_allports (para practicar en casa)",text:"-p- revisa los 65535 puertos posibles, no solo los más comunes. Más lento, pero puede encontrar servicios escondidos en puertos poco usuales.",ex:"nmap -p- 10.0.2.15 revisa absolutamente todos los puertos, puede tardar varios minutos."},
+pn:{title:"man nmap_pn (para practicar en casa)",text:"-Pn le dice a nmap que no verifique primero si el equipo 'responde a ping' — intenta los puertos directamente. Sirve cuando un firewall bloquea el ping pero el equipo sigue activo.",ex:"nmap -Pn 10.0.2.15 revisa los puertos aunque el equipo no responda ping."},
+aggressive:{title:"man nmap_agresivo -A (para practicar en casa)",text:"-A combina en un solo comando detección de versión (-sV), sistema operativo (-O), scripts básicos y traceroute. Buen 'resumen completo' para repasar en casa.",ex:"nmap -A 10.0.2.15 da casi toda la información relevante de un equipo en un solo comando."},
+traceroute:{title:"man traceroute (para practicar en casa)",text:"Muestra el camino (los routers intermedios) que siguen los paquetes hasta llegar al destino. Ayuda a entender cómo está conectada tu propia red.",ex:"traceroute 8.8.8.8 (o tracert en Windows) muestra cada salto hasta llegar a ese servidor."},
+toplist:{title:"man nmap_topports (para practicar en casa)",text:"--top-ports N revisa solo los N puertos más usados en general, para un escaneo rápido en vez de revisar todos.",ex:"nmap --top-ports 20 10.0.2.15 revisa solo los 20 puertos más comunes."},
+niktotuning:{title:"man nikto_tuning (para practicar en casa)",text:"-Tuning 9 activa todas las categorías de prueba de Nikto a la vez. Da un reporte más completo contra un sitio de pruebas autorizado.",ex:"nikto -h http://testasp.vulnweb.com -Tuning 9 revisa todas las categorías de Nikto."}
 };
-const fcapsData = {
-fallas:{title:"F — Fallas (Fault)",text:"Detectar, aislar, registrar y corregir los problemas que afectan el funcionamiento normal de la red.",ex:"Un switch se cae y el sistema debería generar automáticamente un trap para avisar al equipo técnico."},
-config:{title:"C — Configuración",text:"Controlar, documentar y autorizar los cambios en la configuración de los dispositivos de red.",ex:"Todo cambio en un router de producción debe solicitarse, aprobarse y registrarse antes de aplicarse."},
-contab:{title:"A — Contabilidad (Accounting)",text:"Medir el uso de los recursos de red (ancho de banda, tiempo de conexión) por usuario, área o servicio.",ex:"Una empresa mide cuántos GB consume cada sucursal al mes usando contadores SNMP, para repartir el costo del internet."},
-rend:{title:"P — Rendimiento (Performance)",text:"Medir y optimizar el desempeño: latencia, ancho de banda disponible, throughput, pérdida de paquetes.",ex:"Revisar los contadores de tráfico por interfaz para saber si un enlace está saturado en horas pico."},
-seg:{title:"S — Seguridad (Security)",text:"Controlar el acceso a los dispositivos de red y protegerlos frente a accesos no autorizados o configuraciones débiles.",ex:"Cambiar la community string por defecto y restringir por IP quién puede consultar el agente SNMP."}
+const categoriaData = {
+confid:{title:"A — Confidencialidad",text:"Evitar que personas no autorizadas accedan a información o recursos que no les corresponden.",ex:"Un estudiante puede leer la carpeta de calificaciones de otro curso sin ningún permiso especial."},
+integridad:{title:"B — Integridad",text:"Asegurar que el software y los datos no puedan ser alterados ni explotados por fallas conocidas sin corregir.",ex:"Un servidor web corre una versión de Apache de hace años, con vulnerabilidades (CVE) ya publicadas."},
+auten:{title:"C — Autenticación / Autorización (AAA)",text:"Verificar quién accede a un recurso y qué nivel de permiso tiene, antes de dejarlo entrar.",ex:"Un servicio responde sin pedir usuario ni contraseña, o usando las credenciales por defecto de fábrica."},
+cifrado:{title:"D — Cifrado",text:"Proteger la información mientras viaja por la red para que no pueda leerse si alguien la intercepta.",ex:"Un panel de administración envía usuario y contraseña por HTTP, sin HTTPS, en texto plano."},
+defensa:{title:"E — Defensa en profundidad",text:"Usar varias capas de protección (red, acceso, equipo) para que una sola falla no exponga todo el sistema.",ex:"Un recurso queda expuesto a 'everyone' en la red porque no hay ninguna restricción por IP ni segmentación."}
 };
 
 const nodes=[
-{id:"NODO-07",title:"🏭 Planta ANDES",tag:"SNMP expuesto",meta:"Monitoreo de sensores vía SNMP",context:"La planta usa SNMP para monitorear temperatura y estado de sus servidores (nodo simulado 10.0.2.15). El administrador asegura que el acceso está protegido.",incident:"🚨 ALERTA: Un pasante conectado a la red interna logró leer toda la configuración del agente SNMP sin ninguna contraseña especial, solo con la cadena de comunidad por defecto.",
+{id:"NODO-07",title:"🏭 Planta ANDES",tag:"FTP anónimo",meta:"Servidor de mantenimiento vía FTP",context:"La planta usa un servidor FTP (10.0.2.15) para que los proveedores suban manuales y reportes de mantenimiento. TI asegura que 'solo entra quien tiene la clave'.",incident:"🚨 ALERTA: Un auditor, conectado a la red interna autorizada, logró listar y descargar archivos del servidor FTP sin usar ninguna contraseña.",
 commands:[
-{label:"cat /etc/snmp/snmpd.conf",out:"rocommunity public  default\nsyslocation Sala de Servidores\nsyscontact admin@planta.local",key:false},
-{label:"snmpwalk -v2c -c public 10.0.2.15",out:"SNMPv2-MIB::sysDescr.0 = Linux planta-mon 6.1\nSNMPv2-MIB::sysName.0 = SRV-MONITOREO\nIF-MIB::ifDescr.1 = eth0\n\n[se obtuvo información completa del sistema sin credenciales adicionales]",key:true},
-{label:"nmap -sU -p161 10.0.2.15",out:"PORT    STATE SERVICE\n161/udp open  snmp",key:false},
-{label:"cat /docs/politica_seguridad.txt",out:"Las community strings SNMP deben ser únicas, complejas y nunca usar los valores por defecto (public/private).",key:false},
-{label:"cat /docs/diagrama_red.txt",out:"Servidor de monitoreo conectado directamente a la VLAN de usuarios, sin segmentación.",key:false},
-{label:"cat /tickets/214.log",out:"Ticket #214 · 'Pasante reporta que pudo ver el nombre y la ubicación del servidor desde su equipo, por curiosidad.' Estado: ABIERTO",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Seguridad (Security) — acceso no controlado al agente SNMP.","Contabilidad (Accounting) — mal cálculo de consumo de datos.","Rendimiento (Performance) — lentitud en la red.","Fallas (Fault) — un dispositivo dejó de responder."],controlCorrect:0,verdict:"critico"},
+{label:"nmap -sV -p21 10.0.2.15",out:"PORT   STATE SERVICE VERSION\n21/tcp open  ftp     vsftpd 2.3.4",key:false},
+{label:"nmap --script ftp-anon -p21 10.0.2.15",out:"21/tcp open  ftp\n| ftp-anon: Anonymous FTP login allowed (FTP code 230)\n|_ drwxr-xr-x  2 ftp ftp  mantenimiento/\n\n[se pudo listar el contenido sin credenciales]",key:true},
+{label:"cat /docs/politica_accesos.txt",out:"El acceso FTP a servidores internos debe requerir usuario y contraseña asignados por TI. El acceso anónimo está prohibido.",key:false},
+{label:"cat /tickets/167.log",out:"Ticket #167 · 'Un proveedor dice que pudo entrar al FTP sin que le dieran clave.' Estado: ABIERTO",key:false},
+{label:"cat /docs/diagrama_red.txt",out:"El servidor FTP está conectado a la misma VLAN que los equipos administrativos, sin segmentación.",key:false},
+{label:"cat /inventario/servidor_ftp.txt",out:"srv-ftp-mantenimiento: contiene manuales técnicos y credenciales de equipos de planta en texto plano.",key:false},
+{label:"nmap -sV --script vuln -p21 10.0.2.15",out:"21/tcp open  ftp  vsftpd 2.3.4\n| ftp-anon: Anonymous FTP login allowed\n|_ftp-vsftpd-backdoor: NOT VULNERABLE (esta versión no tiene la puerta trasera conocida)",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Autenticación / Autorización (AAA) — no se exige usuario ni contraseña para entrar.","Cifrado — los datos viajan sin protección por la red.","Integridad — el software del servidor está desactualizado.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"critico",
+quickQ:{prompt:"¿Qué hace nmap -sV además de decir que el puerto está abierto?",opts:["Intenta detectar la versión exacta del servicio que corre en ese puerto.","Borra el servicio FTP del servidor.","Cambia la contraseña del servidor FTP.","Bloquea el puerto para que nadie entre."],correct:0}},
 
-{id:"NODO-12",title:"🏥 Hospital Red Vital",tag:"Fallas sin notificar",meta:"Disponibilidad de equipos críticos",context:"El hospital tiene un sistema de monitoreo que debería avisar de inmediato si un switch o servidor crítico deja de responder.",incident:"🚨 ALERTA: Un switch del área de emergencias estuvo caído 6 horas durante la madrugada y nadie fue notificado hasta que el personal reportó la falla por su cuenta.",
+{id:"NODO-12",title:"🏥 Hospital Red Vital",tag:"Apache desactualizado",meta:"Portal web de citas médicas",context:"El hospital expone un portal interno de citas en un servidor (10.0.2.22). TI dice que 'nunca se ha tocado porque funciona bien'.",incident:"🚨 ALERTA: Un escaneo de rutina encontró que el servidor web corre una versión de Apache de hace varios años, con vulnerabilidades públicas (CVE) ya conocidas.",
 commands:[
-{label:"cat /docs/procedimiento_fallas.txt",out:"Todo equipo crítico debe generar un trap SNMP al área de soporte en menos de 5 minutos de quedar inactivo.",key:false},
-{label:"cat /var/log/monitor.log",out:"02:14 — switch-emergencias DOWN (sin alerta enviada)\n08:20 — Personal reporta falla de red\n08:25 — Técnico revisa y encuentra el switch apagado desde las 02:14",key:false},
-{label:"cat /etc/monitor/monitor.conf",out:"trap-destination: NO CONFIGURADO\npolling-interval: 300s\n\n[el destino de los traps nunca fue configurado]",key:true},
-{label:"cat /dashboard/estado.txt",out:"switch-emergencias — Último dato: hace 3 horas (sin alerta visual durante la falla)",key:false},
-{label:"cat /tickets/881.log",out:"Ticket #881 · Falla detectada por el personal, no por el sistema. Tiempo de inactividad: 6h 11min.",key:false},
-{label:"cat /inventario/equipos.txt",out:"switch-emergencias: marcado como 'crítico — prioridad alta' en el inventario.",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Fallas (Fault Management) — el sistema no detectó ni notificó la caída a tiempo.","Contabilidad (Accounting) — error en el cobro del servicio de internet.","Configuración (Configuration) — un técnico cambió una IP sin autorización.","Seguridad (Security) — acceso no autorizado al switch."],controlCorrect:0,verdict:"parcial"},
+{label:"nmap -sV -p80 10.0.2.22",out:"PORT   STATE SERVICE VERSION\n80/tcp open  http    Apache httpd 2.2.3 ((CentOS))",key:false},
+{label:"nikto -h http://10.0.2.22",out:"+ Server: Apache/2.2.3 (CentOS)\n+ Apache 2.2.3 appears to be outdated (current is 2.4.x)\n+ OSVDB-877: Multiple default files found\n+ 3 CVE(s) known to affect this version",key:true},
+{label:"cat /docs/politica_parches.txt",out:"Todo software de servidor debe actualizarse dentro de los 30 días posteriores a un parche de seguridad publicado.",key:false},
+{label:"cat /var/log/apache_update.log",out:"Última actualización registrada: hace 4 años. Sin parches aplicados desde entonces.",key:false},
+{label:"cat /tickets/552.log",out:"Ticket #552 · 'El portal de citas se ve anticuado pero funciona, no lo toquen.' Estado: CERRADO SIN ACCIÓN",key:false},
+{label:"cat /docs/criticidad_sistemas.txt",out:"Portal de citas: clasificado como sistema de 'atención al paciente', expuesto a toda la red de la institución.",key:false},
+{label:"nmap -O 10.0.2.22",out:"Running: Linux 2.6.X\nOS details: CentOS release 5 (final) — sistema operativo también desactualizado",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Integridad — el software tiene vulnerabilidades conocidas (CVE) sin corregir.","Autenticación / Autorización (AAA) — faltan credenciales de acceso.","Confidencialidad — cualquiera puede leer archivos privados.","Cifrado — las contraseñas viajan sin protección."],controlCorrect:0,verdict:"critico",
+quickQ:{prompt:"¿Qué es un CVE?",opts:["Un identificador público de una vulnerabilidad ya conocida y documentada.","Un tipo de virus que borra archivos.","El nombre del protocolo que usa Apache.","Una contraseña por defecto del servidor."],correct:0}},
 
-{id:"NODO-23",title:"🏫 Colegio San Marcos",tag:"Rendimiento",meta:"Red de laboratorios de cómputo",context:"Los laboratorios de cómputo presentan lentitud constante en horas pico. El administrador dice que 'la red siempre ha sido así' y que no hay nada que medir.",incident:"🚨 ALERTA: Durante las clases de la tarde, los estudiantes no pueden cargar páginas ni ver videos educativos. No existe ningún registro de cuánto tráfico genera cada laboratorio.",
+{id:"NODO-23",title:"🏫 Colegio San Marcos",tag:"SMB sin autenticación",meta:"Carpetas compartidas entre profesores",context:"El colegio comparte materiales entre profesores mediante una carpeta de red (10.0.2.31). Administración dice que 'solo los profesores conocen la ruta'.",incident:"🚨 ALERTA: Un estudiante, conectado a la red escolar, encontró que podía ver y copiar todas las carpetas compartidas sin ingresar usuario ni contraseña.",
 commands:[
-{label:"cat /docs/politica_red.txt",out:"El ancho de banda disponible debe monitorearse y distribuirse de forma que ningún laboratorio sature la conexión completa.",key:false},
-{label:"snmpwalk -v2c -c public switch-labs | grep ifInOctets",out:"ifInOctets.2 (Lab-A): 8.9 GB\nifInOctets.3 (Lab-B): 0.4 GB\nifInOctets.4 (Administración): 0.3 GB\n\n[Lab-A concentra casi todo el tráfico de la tarde]",key:true},
-{label:"cat /dispositivos/lab-a_detectado.txt",out:"Una laptop descargando un archivo de gran tamaño de forma continua durante la clase.",key:false},
-{label:"cat /etc/router/qos.conf",out:"Sin reglas de QoS (calidad de servicio) configuradas; todo el tráfico tiene la misma prioridad.",key:false},
-{label:"cat /tickets/432.log",out:"Ticket #432 · 'La red se pone lenta todas las tardes, sobre todo cuando hay clase en el Lab-A.'",key:false},
-{label:"cat /docs/diagrama_red.txt",out:"Todos los laboratorios comparten el mismo enlace de salida a Internet sin límites individuales.",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Rendimiento (Performance) — no se mide ni se gestiona el uso del ancho de banda.","Fallas (Fault) — un cable de red está cortado.","Contabilidad (Accounting) — no se cobra correctamente el servicio.","Seguridad (Security) — hay un atacante externo."],controlCorrect:0,verdict:"parcial"},
+{label:"nmap -sV -p445 10.0.2.31",out:"PORT    STATE SERVICE      VERSION\n445/tcp open  microsoft-ds Samba smbd 3.X",key:false},
+{label:"nmap --script smb-enum-shares -p445 10.0.2.31",out:"Host script results:\n| smb-enum-shares:\n|   \\\\10.0.2.31\\Profesores (acceso: ANONYMOUS)\n|_  \\\\10.0.2.31\\Calificaciones (acceso: ANONYMOUS)",key:true},
+{label:"smbclient -L 10.0.2.31 -N",out:"Sharename       Type  Comment\nProfesores      Disk\nCalificaciones  Disk\n(sin solicitar contraseña)",key:false},
+{label:"cat /docs/politica_recursos_compartidos.txt",out:"Las carpetas compartidas que contengan datos de estudiantes deben requerir usuario y contraseña institucional.",key:false},
+{label:"cat /tickets/298.log",out:"Ticket #298 · 'Un estudiante dice que pudo ver la carpeta de Calificaciones desde su laptop.' Estado: ABIERTO",key:false},
+{label:"cat /inventario/carpetas_compartidas.txt",out:"Carpeta 'Calificaciones' contiene notas parciales de los tres cursos del colegio.",key:false},
+{label:"nmap -sV --script vuln -p445 10.0.2.31",out:"445/tcp open  microsoft-ds  Samba smbd 3.X\n| smb-vuln-ms17-010: ERROR (no se pudo confirmar, requiere más pruebas)",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Confidencialidad — cualquiera en la red puede leer archivos que no debería.","Integridad — el software de archivos está desactualizado.","Cifrado — los datos viajan sin protección.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"parcial",
+quickQ:{prompt:"¿Qué hace el script nmap smb-enum-shares?",opts:["Lista las carpetas compartidas por SMB y si piden usuario/contraseña.","Elimina las carpetas compartidas.","Cambia los permisos de las carpetas.","Apaga el servicio SMB."],correct:0}},
 
-{id:"NODO-31",title:"🏢 Oficinas Central Corp",tag:"Configuración",meta:"Cambios no autorizados",context:"La empresa exige que todo cambio de configuración en routers y switches pase por un proceso de aprobación y quede documentado.",incident:"🚨 ALERTA: Un router dejó de enrutar correctamente el tráfico de una sucursal después de que apareciera una configuración distinta a la documentada oficialmente. Nadie registró haber hecho el cambio.",
+{id:"NODO-31",title:"🏢 Oficinas Central Corp",tag:"NFS expuesto",meta:"Servidor de archivos entre departamentos",context:"La empresa usa un servidor de archivos NFS (10.0.2.40) para compartir documentos dentro de un mismo departamento.",incident:"🚨 ALERTA: TI reporta que una computadora de otro departamento, sin ningún permiso especial, logró montar y leer la carpeta de contratos del área legal.",
 commands:[
-{label:"cat /docs/procedimiento_cambios.txt",out:"Todo cambio de configuración debe solicitarse, aprobarse y registrarse antes de aplicarse en un equipo de producción.",key:false},
-{label:"cat /backups/config_oficial.txt",out:"interface eth0\n ip route 192.168.10.0/24 via 192.168.1.1",key:false},
-{label:"show running-config | diff backup",out:"interface eth0\n ip route 192.168.10.0/24 via 192.168.1.254\n\n[ruta distinta a la documentada — cambio no autorizado]",key:true},
-{label:"cat /var/log/auth.log",out:"03:47 — Acceso SSH exitoso desde 192.168.1.80 (usuario: tecnico02)\nNo existe ticket ni solicitud asociada a esa hora.",key:false},
-{label:"grep tecnico02 /tickets/*.log",out:"Búsqueda en el sistema de tickets: NO ENCONTRADA para esa fecha.",key:false},
-{label:"cat /rrhh/perfil_tecnico02.txt",out:"Rol: Soporte N1. Permiso de modificar routers de producción: debería requerir aprobación de un supervisor.",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Configuración (Configuration Management) — un cambio no autorizado ni documentado.","Rendimiento (Performance) — el enlace está saturado.","Contabilidad (Accounting) — mal cálculo de consumo de datos.","Fallas (Fault) — un cable físico se dañó."],controlCorrect:0,verdict:"critico"},
+{label:"nmap -p111,2049 -sV 10.0.2.40",out:"PORT     STATE SERVICE  VERSION\n111/tcp  open  rpcbind\n2049/tcp open  nfs_acl",key:false},
+{label:"showmount -e 10.0.2.40",out:"Export list for 10.0.2.40:\n/data/legal (everyone)\n/data/rrhh  (everyone)",key:true},
+{label:"mount -t nfs 10.0.2.40:/data/legal /mnt/test",out:"montado correctamente, sin solicitar usuario ni contraseña",key:false},
+{label:"cat /docs/politica_permisos.txt",out:"Las carpetas exportadas por NFS deben restringirse por IP o rango de red autorizado, nunca a 'everyone'.",key:false},
+{label:"cat /tickets/615.log",out:"Ticket #615 · 'Una compañera de Marketing dice que pudo abrir la carpeta de Legal desde su PC.' Estado: ABIERTO",key:false},
+{label:"cat /docs/clasificacion_datos.txt",out:"Carpeta /data/legal: contiene contratos y documentos confidenciales de la empresa.",key:false},
+{label:"nmap -sn 10.0.2.0/24",out:"Nmap scan report for 10.0.2.40 — Host is up\n[confirma que el servidor NFS está activo en esa subred antes de seguir indagando]",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Defensa en profundidad — no hay restricción por red para acceder al recurso compartido.","Autenticación / Autorización (AAA) — no se exige usuario ni contraseña.","Cifrado — los datos viajan sin protección.","Integridad — el software de archivos está desactualizado."],controlCorrect:0,verdict:"parcial",
+quickQ:{prompt:"¿Qué muestra el comando showmount -e?",opts:["Qué carpetas exporta un servidor NFS y a quién se las exporta.","La contraseña del servidor NFS.","El historial de archivos borrados.","La versión del sistema operativo."],correct:0}},
 
-{id:"NODO-44",title:"🛒 RetailPlus",tag:"Contabilidad",meta:"Consumo de datos por sucursal",context:"La empresa paga un enlace dedicado de internet y distribuye el costo entre sucursales según el consumo real, medido por el equipo de red.",incident:"🚨 ALERTA: La sucursal Norte fue facturada por un consumo mucho mayor al que sus propios empleados reportan usar. Contabilidad pide una explicación técnica antes de pagar.",
+{id:"NODO-44",title:"🛒 RetailPlus",tag:"Login sin cifrar",meta:"Panel de administración de cajas",context:"El panel de administración de las cajas registradoras se gestiona desde un navegador en la red interna de la tienda (10.0.2.55).",incident:"🚨 ALERTA: Un técnico, usando una herramienta de análisis de tráfico en la misma red, pudo ver el usuario y la contraseña del administrador mientras alguien iniciaba sesión.",
 commands:[
-{label:"cat /docs/politica_costos.txt",out:"El costo del enlace se distribuye según el tráfico real medido en la interfaz de cada sucursal, obtenido por SNMP.",key:false},
-{label:"snmpwalk -v2c -c public router-norte | grep ifOutOctets",out:"ifOutOctets (últimos 30 días): 410 GB\n\n[muy por debajo de lo facturado]",key:true},
-{label:"cat /facturacion/norte.txt",out:"Consumo facturado: 900 GB — no coincide con el contador SNMP.",key:false},
-{label:"cat /dispositivos/no_autorizados.txt",out:"Un punto de acceso Wi-Fi no autorizado conectado a la red de la sucursal Norte, usado también por un local vecino.",key:false},
-{label:"cat /tickets/309.log",out:"Ticket #309 · 'La facturación de Norte no coincide con lo que reportamos.'",key:false},
-{label:"cat /facturacion/proceso.txt",out:"El cálculo se hace manualmente una vez al mes, sin automatizar la lectura de los contadores SNMP.",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Contabilidad (Accounting Management) — el consumo registrado no corresponde al uso real.","Seguridad (Security) — hubo un acceso no autorizado a documentos contables.","Fallas (Fault) — el enlace de internet está caído.","Configuración (Configuration) — un router perdió su configuración."],controlCorrect:0,verdict:"parcial"},
+{label:"nmap -sV -p80,443 10.0.2.55",out:"PORT    STATE  SERVICE VERSION\n80/tcp  open   http    nginx 1.14\n443/tcp closed https",key:false},
+{label:"nikto -h http://10.0.2.55",out:"+ Login form found: /admin/login.php\n+ Form submits via POST over plain HTTP\n+ No Strict-Transport-Security header\n+ Cookie sent without 'Secure' flag",key:true},
+{label:"cat /docs/politica_cifrado.txt",out:"Todo panel de administración que maneje credenciales debe usar HTTPS obligatoriamente.",key:false},
+{label:"cat /tickets/740.log",out:"Ticket #740 · 'Un técnico dice que vio una contraseña en texto plano usando un programa de red.' Estado: ABIERTO",key:false},
+{label:"cat /docs/diagrama_red.txt",out:"El panel de administración está en la misma red Wi-Fi que usan los clientes de la tienda.",key:false},
+{label:"cat /inventario/panel_admin.txt",out:"Panel de administración: controla precios, descuentos y apertura de caja.",key:false},
+{label:"nmap -sV --script vuln -p80 10.0.2.55",out:"80/tcp open  http  nginx 1.14\n| http-csrf: POST /admin/login.php sin token CSRF visible",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Cifrado — las credenciales viajan en texto plano por la red.","Autenticación / Autorización (AAA) — no se exige usuario ni contraseña.","Confidencialidad — cualquiera puede leer archivos privados.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"critico",
+quickQ:{prompt:"¿Por qué es un riesgo que un login use HTTP en vez de HTTPS?",opts:["Porque los datos (incluida la contraseña) viajan sin cifrar y pueden interceptarse.","Porque HTTP es más lento que HTTPS.","Porque HTTP no permite formularios.","Porque HTTP solo funciona en redes Wi-Fi."],correct:0}},
 
-{id:"NODO-59",title:"🏦 Banco Cooperativo",tag:"SNMP con RW abierto",meta:"Gestión de red de agencia",context:"El banco asegura que ningún servicio de administración de sus equipos es accesible desde fuera de la red interna.",incident:"🚨 ALERTA: En una revisión interna autorizada, dentro del propio laboratorio de pruebas del banco, se encontró que el puerto SNMP de un switch respondía con la cadena de comunidad por defecto, permitiendo leer y potencialmente modificar su configuración.",
+{id:"NODO-59",title:"🏦 Banco Cooperativo",tag:"SNMP expuesto",meta:"Revisión de laboratorio de pruebas",context:"El banco realiza, en su laboratorio de pruebas autorizado, una revisión de los equipos de red antes de salir a producción.",incident:"🚨 ALERTA: Se encontró que un switch del laboratorio respondía a consultas SNMP usando la cadena de comunidad por defecto, sin ninguna restricción.",
 commands:[
-{label:"cat /docs/politica_seguridad_banco.txt",out:"Ningún servicio de gestión (SNMP, SSH, Telnet) debe usar credenciales por defecto ni quedar accesible sin control de acceso.",key:false},
-{label:"nmap -sU -p161 --script snmp-info 10.0.2.20",out:"161/udp open snmp\n| snmp-info:\n|   sysDescr: Switch-Core-01\n|   location: Agencia Centro\n|_  contact: admin@banco.local",key:true},
-{label:"cat /config/switch_core01.txt",out:"snmp-server community public RO\nsnmp-server community private RW\n\n[la comunidad 'private' permite incluso escritura]",key:false},
-{label:"cat /docs/diagrama_red.txt",out:"El switch de agencia está conectado a la misma VLAN que los cajeros automáticos.",key:false},
-{label:"snmpwalk -v2c -c private 10.0.2.20",out:"[laboratorio de pruebas] Se pudo leer y, en teoría, modificar parámetros de configuración del switch.",key:false},
-{label:"cat /auditoria/hallazgo_interno.txt",out:"Registrado en el laboratorio de pruebas. Nunca se ejecutó contra la red de producción real del banco.",key:false}],
-controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",
-controls:["Seguridad (Security) — un servicio de gestión quedó accesible con credenciales por defecto.","Rendimiento (Performance) — el switch está sobrecargado.","Contabilidad (Accounting) — mal cálculo de transacciones.","Fallas (Fault) — el switch se reinicia solo."],controlCorrect:0,verdict:"critico"}
+{label:"nmap -sU -p161 10.0.2.60",out:"PORT    STATE SERVICE\n161/udp open  snmp",key:false},
+{label:"nmap -sU -p161 --script snmp-info 10.0.2.60",out:"161/udp open snmp\n| snmp-info:\n|   sysDescr: Switch-Core-Lab\n|_  contact: admin@banco.local",key:true},
+{label:"snmpwalk -v2c -c public 10.0.2.60",out:"SNMPv2-MIB::sysName.0 = Switch-Core-Lab\n[información completa obtenida sin credenciales adicionales]",key:false},
+{label:"cat /docs/politica_seguridad_banco.txt",out:"Ningún servicio de gestión debe responder con credenciales por defecto ni sin control de acceso.",key:false},
+{label:"cat /config/switch_core_lab.txt",out:"snmp-server community public RO\n[nunca se cambió el valor de fábrica]",key:false},
+{label:"cat /auditoria/hallazgo_interno.txt",out:"Registrado en el laboratorio de pruebas. En la próxima clase vamos a ver a fondo cómo funciona SNMP y por qué esto es tan común.",key:false},
+{label:"nmap -sV -p22,23,80 10.0.2.60",out:"PORT   STATE  SERVICE VERSION\n22/tcp open   ssh     OpenSSH 7.4\n23/tcp open   telnet  (sin cifrar)\n80/tcp closed http",key:false}],
+controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
+controls:["Autenticación / Autorización (AAA) — el servicio responde con credenciales por defecto.","Integridad — el software del switch está desactualizado.","Cifrado — los datos viajan sin protección.","Confidencialidad — cualquiera puede leer archivos privados."],controlCorrect:0,verdict:"parcial",
+quickQ:{prompt:"¿Qué es la 'community string' en SNMP?",opts:["Una clave de acceso simple (como \"public\") que, si no se cambia, deja ver la configuración del equipo.","El nombre del fabricante del switch.","La dirección IP del servidor SNMP.","Un tipo de cable de red."],correct:0}}
 ];
 
-let name="",node=null,nodeIndex=null,opened=0,evidenceBonus=false,answers={control:false,verdict:false,controlIndex:null,verdictValue:null},score=0,submitted=false;
+let name="",node=null,nodeIndex=null,opened=0,evidenceBonus=false,answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null},score=0,submitted=false;
 
 function show(id){["intro","choose","mission","final"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 
 function renderMan(){
 document.getElementById("manList").innerHTML=Object.keys(manData).map(k=>`<button type="button" class="cmdbtn" onclick="showMan('${k}')"><span class="idx">$</span>${manData[k].title}</button>`).join("");
-document.getElementById("fcapsList").innerHTML=Object.keys(fcapsData).map(k=>`<button type="button" class="cmdbtn" onclick="showFcaps('${k}')"><span class="idx">$</span>${fcapsData[k].title}</button>`).join("");
+document.getElementById("catList").innerHTML=Object.keys(categoriaData).map(k=>`<button type="button" class="cmdbtn" onclick="showCat('${k}')"><span class="idx">$</span>${categoriaData[k].title}</button>`).join("");
 }
 function showMan(k){const d=manData[k];document.getElementById("manPanel").innerHTML=`<b style="color:var(--amber)">${d.title}</b><br><br>${d.text}<br><br><span class="muted">▍ejemplo:</span> ${d.ex}`;}
-function showFcaps(k){const d=fcapsData[k];document.getElementById("fcapsPanel").innerHTML=`<b style="color:var(--amber)">${d.title}</b><br><br>${d.text}<br><br><span class="muted">▍ejemplo:</span> ${d.ex}`;}
+function showCat(k){const d=categoriaData[k];document.getElementById("catPanel").innerHTML=`<b style="color:var(--amber)">${d.title}</b><br><br>${d.text}<br><br><span class="muted">▍ejemplo:</span> ${d.ex}`;}
 
 function start(){
 const g=document.getElementById("groupName").value;
 name=document.getElementById("studentName").value.trim();
 if(!g){alert("Selecciona tu grupo.");return}
 if(!name){alert("Escribe los nombres de los técnicos de guardia.");return}
-const saved=JSON.parse(localStorage.getItem("nocLab_"+g)||"null");
+const saved=JSON.parse(localStorage.getItem("socLab_"+g)||"null");
 if(saved && saved.submitted){restoreSubmitted(saved);return}
 if(saved && saved.started && saved.nodeIndex!==undefined && saved.nodeIndex!==null){
 if(confirm("Este grupo ya tiene un turno iniciado en el nodo '"+(nodes[saved.nodeIndex]?.title||"")+"' en este dispositivo. ¿Continuar donde se quedó?\n\n(Cancelar = elegir otro nodo desde cero)")){
@@ -362,7 +388,7 @@ document.getElementById("nodes").innerHTML=nodes.map((n,i)=>`<div class="node" o
 }
 function selectNode(i){
 nodeIndex=i;node=nodes[i];score=0;opened=0;evidenceBonus=false;
-answers={control:false,verdict:false,controlIndex:null,verdictValue:null};
+answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null};
 saveState({started:true,submitted:false,group:document.getElementById("groupName").value,name,nodeIndex:i,opened,evidenceBonus,answers,score});
 renderMission();show("mission");
 }
@@ -370,7 +396,7 @@ function changeNode(){
 if(submitted) return;
 if(!confirm("¿Volver a elegir otro nodo? El progreso de este nodo no está enviado, así que se perderá si no vuelves a él.")) return;
 node=null;nodeIndex=null;opened=0;evidenceBonus=false;
-answers={control:false,verdict:false,controlIndex:null,verdictValue:null};
+answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null};
 renderNodes();show("choose");
 }
 function renderMission(){
@@ -383,9 +409,11 @@ document.getElementById("missionIncident").textContent=node.incident;
 document.getElementById("bar").style.width="0%";
 document.getElementById("cmdList").innerHTML=node.commands.map((c,i)=>`<button type="button" class="cmdbtn" id="cmdbtn${i}" onclick="runCmd(${i})"><span class="idx">${i+1}</span>${c.label}</button>`).join("");
 document.getElementById("term").innerHTML=`<div class="ln out">$ consola lista. Ejecuta un comando de la izquierda<span class="cursor"></span></div>`;
+document.getElementById("quickPrompt").textContent=node.quickQ.prompt;
+document.getElementById("quickOptions").innerHTML=node.quickQ.opts.map((x,i)=>`<div class="opt" onclick="pickQuick(${i},this)">[${i+1}] ${x}</div>`).join("");
 document.getElementById("controlPrompt").textContent=node.controlPrompt;
 document.getElementById("controlOptions").innerHTML=node.controls.map((x,i)=>`<div class="opt" onclick="pickControl(${i},this)">[${i+1}] ${x}</div>`).join("");
-document.getElementById("verdictOptions").innerHTML=[["ok","[1] 🟢 Correctamente gestionado"],["parcial","[2] 🟡 Parcialmente gestionado / requiere ajuste"],["critico","[3] 🔴 Vulnerabilidad o falla crítica"]].map(x=>`<div class="opt" onclick="pickVerdict('${x[0]}',this)">${x[1]}</div>`).join("");
+document.getElementById("verdictOptions").innerHTML=[["ok","[1] 🟢 Correctamente protegido"],["parcial","[2] 🟡 Riesgo parcial / requiere ajuste"],["critico","[3] 🔴 Vulnerabilidad crítica"]].map(x=>`<div class="opt" onclick="pickVerdict('${x[0]}',this)">${x[1]}</div>`).join("");
 ["condition","criterion","cause","effect","recommendation"].forEach(x=>document.getElementById(x).value="");
 document.getElementById("submitMsg").className="note hidden";
 setupCounters();
@@ -397,13 +425,19 @@ const c=node.commands[i];
 const term=document.getElementById("term");
 const wasOpen=btn.classList.contains("done");
 if(!wasOpen){opened++;btn.classList.add("done");}
-const promptLine=document.createElement("div");promptLine.className="ln";promptLine.innerHTML=`<span class="prompt">tecnico@noc:~$</span> ${c.label}`;
+const promptLine=document.createElement("div");promptLine.className="ln";promptLine.innerHTML=`<span class="prompt">tecnico@soc:~$</span> ${c.label}`;
 const outLine=document.createElement("div");outLine.className="ln out";outLine.textContent=c.out;
 const cursorWasAt=term.querySelector(".cursor");if(cursorWasAt)cursorWasAt.parentElement.remove();
 term.appendChild(promptLine);term.appendChild(outLine);
 const newCursor=document.createElement("div");newCursor.className="ln out";newCursor.innerHTML=`$ <span class="cursor"></span>`;term.appendChild(newCursor);
 term.scrollTop=term.scrollHeight;
 if(opened>=3 && !evidenceBonus){evidenceBonus=true;score+=4;}
+saveCurrentState();updateBar();
+}
+function pickQuick(i,el){
+if(answers.quick)return;
+answers.quick=true;answers.quickIndex=i;el.classList.add("selected");
+if(i===node.quickQ.correct)score+=1;
 saveCurrentState();updateBar();
 }
 function pickControl(i,el){
@@ -417,7 +451,7 @@ saveCurrentState();updateBar();
 }
 function pickVerdict(v,el){
 if(answers.verdict)return;
-if(!answers.control){alert("Primero identifica el área de FCAPS.");return}
+if(!answers.control){alert("Primero identifica la categoría de riesgo.");return}
 answers.verdict=true;answers.verdictValue=v;el.classList.add("selected");
 if(v===node.verdict)score+=4;
 saveCurrentState();updateBar();
@@ -430,7 +464,7 @@ async function submitMission(){
 let vals=["condition","criterion","cause","effect","recommendation"].map(x=>document.getElementById(x).value.trim());
 let group=document.getElementById("groupName").value;
 if(opened<3||!answers.control||!answers.verdict){
-let m=document.getElementById("submitMsg");m.className="note bad";m.textContent="Antes de cerrar el turno: ejecuta al menos 3 comandos y completa el área FCAPS y el diagnóstico.";return}
+let m=document.getElementById("submitMsg");m.className="note bad";m.textContent="Antes de cerrar el turno: ejecuta al menos 3 comandos y completa la categoría de riesgo y el diagnóstico.";return}
 if(vals.some(v=>v.length<30)){
 let m=document.getElementById("submitMsg");m.className="note bad";m.textContent="Cada campo del informe debe tener al menos 30 caracteres.";return}
 score+=4;
@@ -440,7 +474,7 @@ timestamp:new Date().toISOString(),grupo:group,integrantes:name,escenario:node.t
 area_fcaps_correcta:answers.controlIndex===node.controlCorrect,prueba_correcta:keyRan,
 diagnostico_correcto:answers.verdictValue===node.verdict,evidencias_revisadas:opened,
 condicion:vals[0],criterio:vals[1],causa:vals[2],efecto:vals[3],recomendacion:vals[4],
-diagnostico:node.verdict==="critico"?"VULNERABILIDAD / FALLA CRÍTICA":node.verdict==="parcial"?"PARCIALMENTE GESTIONADO":"CORRECTAMENTE GESTIONADO"
+diagnostico:node.verdict==="critico"?"VULNERABILIDAD CRÍTICA":node.verdict==="parcial"?"RIESGO PARCIAL":"CORRECTAMENTE PROTEGIDO"
 };
 const msg=document.getElementById("submitMsg");
 msg.className="note warn";msg.textContent="▍ transmitiendo reporte...";
@@ -450,10 +484,10 @@ await fetch(GOOGLE_SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Ty
 }
 submitted=true;
 const saved={started:true,submitted:true,group,name,nodeIndex,opened,evidenceBonus,answers,score,vals,payload};
-localStorage.setItem("nocLab_"+group,JSON.stringify(saved));
+localStorage.setItem("socLab_"+group,JSON.stringify(saved));
 document.getElementById("finalIntro").textContent=`${group} · ${name} · ${node.title}`;
-document.getElementById("finalScore").textContent=`${score}/20`;
-document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD / FALLA CRÍTICA":node.verdict==="parcial"?"🟡 PARCIALMENTE GESTIONADO":"🟢 CORRECTAMENTE GESTIONADO";
+document.getElementById("finalScore").textContent=`${score}/21`;
+document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD CRÍTICA":node.verdict==="parcial"?"🟡 RIESGO PARCIAL":"🟢 CORRECTAMENTE PROTEGIDO";
 document.getElementById("finalReview").innerHTML=buildFinalReview(vals);
 msg.className="note good";msg.textContent="✅ Reporte transmitido correctamente.";
 show("final");
@@ -465,9 +499,12 @@ function buildFinalReview(vals){
 const chosenC=answers.controlIndex,chosenV=answers.verdictValue;
 const controlText=node.controls[chosenC]||"Sin respuesta";
 const correctControl=node.controls[node.controlCorrect];
-const verdictText={ok:"🟢 Correctamente gestionado",parcial:"🟡 Parcialmente gestionado",critico:"🔴 Vulnerabilidad o falla crítica"};
+const verdictText={ok:"🟢 Correctamente protegido",parcial:"🟡 Riesgo parcial",critico:"🔴 Vulnerabilidad crítica"};
+const quickText=node.quickQ.opts[answers.quickIndex]||"Sin respuesta";
+const quickCorrect=node.quickQ.opts[node.quickQ.correct];
 return `
-<div class="review-item"><b>1. Área FCAPS</b><br>Tu respuesta: ${controlText}<br><span class="ok">Respuesta sustentada: ${correctControl}</span></div>
+<div class="review-item"><b>0. Pregunta rápida (bonus)</b><br>Tu respuesta: ${quickText}<br><span class="ok">Respuesta correcta: ${quickCorrect}</span></div>
+<div class="review-item"><b>1. Categoría de riesgo</b><br>Tu respuesta: ${controlText}<br><span class="ok">Respuesta sustentada: ${correctControl}</span></div>
 <div class="review-item"><b>2. Diagnóstico</b><br>Tu respuesta: ${verdictText[chosenV]||"Sin respuesta"}<br><span class="ok">Diagnóstico sustentado: ${verdictText[node.verdict]}</span></div>
 <div class="review-item"><b>3. Comandos ejecutados</b><br>${opened} de ${node.commands.length}</div>
 <div class="review-item"><b>4. Informe técnico</b><br><b>Condición:</b> ${vals[0]}<br><b>Criterio:</b> ${vals[1]}<br><b>Causa:</b> ${vals[2]}<br><b>Efecto:</b> ${vals[3]}<br><b>Recomendación:</b> ${vals[4]}</div>`;
@@ -484,18 +521,18 @@ function saveCurrentState(){
 const group=document.getElementById("groupName")?.value;
 if(!group||!node)return;
 const vals=["condition","criterion","cause","effect","recommendation"].map(x=>document.getElementById(x)?.value||"");
-localStorage.setItem("nocLab_"+group,JSON.stringify({started:true,submitted:false,group,name,nodeIndex,opened,evidenceBonus,answers,score,vals}));
+localStorage.setItem("socLab_"+group,JSON.stringify({started:true,submitted:false,group,name,nodeIndex,opened,evidenceBonus,answers,score,vals}));
 }
-function saveState(x){localStorage.setItem("nocLab_"+x.group,JSON.stringify(x));}
+function saveState(x){localStorage.setItem("socLab_"+x.group,JSON.stringify(x));}
 function restoreActive(saved){
 name=saved.name;nodeIndex=saved.nodeIndex;node=nodes[nodeIndex];opened=saved.opened||0;evidenceBonus=saved.evidenceBonus||false;answers=saved.answers||answers;score=saved.score||0;
 document.getElementById("studentName").value=name;document.getElementById("groupName").value=saved.group;
 renderMission();show("mission");
 (saved.vals||[]).forEach((v,i)=>{const id=["condition","criterion","cause","effect","recommendation"][i];if(document.getElementById(id))document.getElementById(id).value=v;});
-node.commands.forEach((c,i)=>{ if(i < (saved.opened||0)) { /* best-effort visual restore */ } });
 restoreSelections();updateBar();
 }
 function restoreSelections(){
+if(answers.quickIndex!==null&&answers.quickIndex!==undefined) document.querySelectorAll("#quickOptions .opt")[answers.quickIndex]?.classList.add("selected");
 if(answers.controlIndex!==null&&answers.controlIndex!==undefined) document.querySelectorAll("#controlOptions .opt")[answers.controlIndex]?.classList.add("selected");
 if(answers.verdictValue){const map={ok:0,parcial:1,critico:2};document.querySelectorAll("#verdictOptions .opt")[map[answers.verdictValue]]?.classList.add("selected");}
 }
@@ -503,8 +540,8 @@ function restoreSubmitted(saved){
 name=saved.name;nodeIndex=saved.nodeIndex;node=nodes[nodeIndex];opened=saved.opened||0;answers=saved.answers||answers;score=saved.score||0;
 document.getElementById("studentName").value=name;document.getElementById("groupName").value=saved.group;
 document.getElementById("finalIntro").textContent=`${saved.group} · ${name} · ${node.title}`;
-document.getElementById("finalScore").textContent=`${score}/20`;
-document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD / FALLA CRÍTICA":node.verdict==="parcial"?"🟡 PARCIALMENTE GESTIONADO":"🟢 CORRECTAMENTE GESTIONADO";
+document.getElementById("finalScore").textContent=`${score}/21`;
+document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD CRÍTICA":node.verdict==="parcial"?"🟡 RIESGO PARCIAL":"🟢 CORRECTAMENTE PROTEGIDO";
 document.getElementById("finalReview").innerHTML=buildFinalReview(saved.vals||["","","","",""]);
 show("final");
 }
