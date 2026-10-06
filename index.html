@@ -89,8 +89,38 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 </div>
 
 <div class="card" style="margin-top:18px">
+<div class="eyebrow">TEORÍA · ARQUITECTURA SNMP</div>
+<h2 style="margin:0">¿Cómo funciona SNMP por dentro?</h2>
+<p class="lead" style="font-size:14px;margin:8px 0 0">Antes de ver FCAPS, entiende las piezas técnicas con las que vas a trabajar en el laboratorio.</p>
+<div class="review-grid">
+<button type="button" class="review-card" onclick="showReview('arquitectura',this)">
+<span class="num">A</span><h3>🏗️ Agente / Manager</h3><p>Quién pregunta y quién responde en una consulta SNMP.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('mib',this)">
+<span class="num">B</span><h3>🗂️ MIB</h3><p>La "base de datos" de todo lo que un dispositivo puede reportar.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('oid',this)">
+<span class="num">C</span><h3>🔢 OID</h3><p>La "dirección" numérica de cada dato dentro del MIB.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('trap',this)">
+<span class="num">D</span><h3>📨 Trap</h3><p>La alerta que el dispositivo envía solo, sin que nadie pregunte.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('versiones',this)">
+<span class="num">E</span><h3>🕰️ Versiones SNMP</h3><p>v1, v2c y v3 — qué cambió y por qué importa para la seguridad.</p>
+</button>
+<button type="button" class="review-card" onclick="showReview('puertos',this)">
+<span class="num">F</span><h3>🔌 Puertos 161/162</h3><p>Por dónde viaja SNMP: consultas vs. alertas.</p>
+</button>
+</div>
+<div id="reviewPanelArq" class="review-panel" style="margin-top:14px">
+<h3>📚 Repaso rápido</h3>
+<p>Haz clic en cualquiera de los seis conceptos de arquitectura para leer la explicación.</p>
+</div>
+</div>
+
+<div class="card" style="margin-top:18px">
 <div class="eyebrow">LO QUE YA APRENDISTE</div>
-<h2 style="margin:0">Repaso de conceptos</h2>
+<h2 style="margin:0">Repaso de conceptos · FCAPS</h2>
 <p class="lead" style="font-size:14px;margin:8px 0 0">Haz clic en cada concepto para recordar qué significa y ver un ejemplo aplicado a gestión de red.</p>
 <div class="review-grid">
 <button type="button" class="review-card" onclick="showReview('fallas',this)">
@@ -132,6 +162,33 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 <li>📄 <b>Tu diagnóstico debe apoyarse en evidencia técnica, no en suposiciones.</b></li>
 <li>🛡️ <b>Todo lo que ves aquí es simulado.</b> Ninguna IP ni red de este laboratorio es real.</li>
 </ul>
+</div>
+
+<div class="card" style="margin-top:18px">
+<div class="eyebrow">PRÁCTICA GUIADA · CÓMALO TÚ MISMO EN TU KALI</div>
+<h2 style="margin:8px 0">🖥️ Comandos que vas a ejecutar</h2>
+<p class="lead" style="font-size:14px;margin:0 0 10px">Antes de jugar, prueba esto en tu propia máquina virtual (siempre contra <b>localhost / 127.0.0.1</b>, nunca contra la red de la universidad). Así entiendes de dónde sale cada evidencia que vas a leer en la misión.</p>
+<div class="two">
+<div>
+<p><b>1. Instalar el agente SNMP</b></p>
+<span class="mono">sudo apt update
+sudo apt install snmpd snmp -y</span>
+<p style="margin-top:10px"><b>2. Iniciar y verificar el servicio</b></p>
+<span class="mono">sudo systemctl start snmpd
+sudo systemctl status snmpd</span>
+<p style="margin-top:10px"><b>3. Consultar tu propio agente (snmpwalk)</b></p>
+<span class="mono">snmpwalk -v2c -c public localhost</span>
+</div>
+<div>
+<p><b>4. Ver dónde vive la "contraseña" (community string)</b></p>
+<span class="mono">sudo cat /etc/snmp/snmpd.conf | grep -i community</span>
+<p style="margin-top:10px"><b>5. Confirmar el puerto abierto con nmap</b></p>
+<span class="mono">nmap -sU -p161 --script snmp-info localhost</span>
+<p style="margin-top:10px"><b>6. Leer solo el nombre del sistema (un OID específico)</b></p>
+<span class="mono">snmpget -v2c -c public localhost sysName.0</span>
+</div>
+</div>
+<div class="note warn" style="margin-top:14px">⚠️ Todos estos comandos se ejecutan contra <b>tu propia máquina</b> (localhost). Nunca los uses contra la red de la UDABOL ni contra ningún equipo que no sea tuyo o de tu laboratorio.</div>
 </div>
 
 <div class="card" style="margin-top:18px">
@@ -244,7 +301,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
    (separada de la de Auditoría de Sistemas).
    Ejemplo: https://script.google.com/macros/s/XXXXXXXX/exec
 */
-const GOOGLE_SCRIPT_URL = "PEGAR_AQUI_URL_DE_APPS_SCRIPT";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz8bax_F7DXGn6gUenyEx8sLXME6WYJVZ9GAJY1HKosd_Muo24I-kpoddPKJqMLFp20/exec";
 
 const companies=[
 {title:"🏭 Planta Industrial ANDES",tag:"SNMP · MONITOREO EXPUESTO",meta:"Monitoreo de sensores vía SNMP",context:"La planta usa SNMP para monitorear temperatura y estado de sus servidores. El administrador asegura que el acceso al monitoreo está protegido y que nadie externo puede leerlo.",incident:"🚨 INCIDENTE: Un pasante conectado a la red interna (10.0.2.0/24) logró leer toda la configuración del agente SNMP del servidor de monitoreo usando la cadena de comunidad por defecto, sin ninguna contraseña especial.",controlPrompt:"¿Qué área de FCAPS está comprometida principalmente?",controls:["Seguridad (Security) — acceso no controlado al agente SNMP.","Contabilidad (Accounting) — mal cálculo de consumo de datos.","Rendimiento (Performance) — lentitud en la red.","Fallas (Fault) — un dispositivo dejó de responder."],controlCorrect:0,testPrompt:"¿Qué comando permitiría comprobar esta vulnerabilidad de forma segura, dentro de un laboratorio propio?",tests:["snmpwalk -v2c -c public 10.0.2.15","ping -t 10.0.2.15","traceroute 10.0.2.15","nslookup 10.0.2.15"],testCorrect:0,verdict:"critico",evidence:[
@@ -471,6 +528,36 @@ show("final");
 }
 
 const reviewData={
+arquitectura:{
+title:"🏗️ Agente y Manager: ¿quién pregunta, quién responde?",
+text:"SNMP funciona con dos roles. El AGENTE es un pequeño programa (como snmpd) que corre dentro del dispositivo (switch, router, servidor) y guarda datos sobre su propio estado. El MANAGER (o NMS, Network Management System) es el software que le hace preguntas al agente para monitorear la red. El manager pregunta, el agente responde — igual que un cliente le pregunta a un mesero y el mesero contesta.",
+example:"Cuando ejecutas snmpwalk -v2c -c public localhost, tu propia terminal actúa como 'manager' y le pregunta al agente snmpd que corre en tu Kali. Por eso necesitas tener snmpd instalado y corriendo antes de poder consultarte a ti mismo."
+},
+mib:{
+title:"🗂️ ¿Qué es un MIB?",
+text:"MIB significa Management Information Base. Es como un árbol/catálogo que organiza TODOS los datos que un agente puede reportar: nombre del equipo, interfaces, tráfico, ubicación, temperatura, etc. Cada fabricante puede agregar sus propios MIBs además de los estándar.",
+example:"Cuando haces snmpwalk, en realidad estás recorriendo ese árbol (el MIB) de principio a fin, y el comando te va mostrando cada rama con su valor."
+},
+oid:{
+title:"🔢 ¿Qué es un OID?",
+text:"OID significa Object Identifier. Es la 'dirección' numérica única de un dato específico dentro del MIB, escrita como una secuencia de números separados por puntos (ej. 1.3.6.1.2.1.1.5.0). Herramientas como snmpwalk traducen esos números a nombres legibles (sysName, ifDescr, etc.) para que sea más fácil de leer.",
+example:"El OID 1.3.6.1.2.1.1.5.0 corresponde siempre a sysName (el nombre del sistema). Por eso snmpget -v2c -c public localhost sysName.0 te devuelve exactamente ese único dato, sin traer todo el árbol completo."
+},
+trap:{
+title:"📨 ¿Qué es un Trap?",
+text:"Un trap es un mensaje que el AGENTE envía por su cuenta al manager, sin que nadie le pregunte, normalmente para avisar de algo urgente (un enlace caído, un reinicio, una temperatura alta). Es la diferencia entre 'el manager pregunta cada cierto tiempo' (polling) y 'el agente avisa apenas pasa algo' (trap).",
+example:"En el caso del Hospital Red Vital, el switch debía enviar un trap apenas se cayera. El problema fue que nadie configuró el destino del trap (trap-destination), así que el aviso nunca llegó."
+},
+versiones:{
+title:"🕰️ Versiones de SNMP: v1, v2c y v3",
+text:"SNMPv1 es la versión original, simple pero sin seguridad real. SNMPv2c agrega mejoras de rendimiento pero sigue usando community strings en texto plano (igual que v1) — es la más usada en la práctica, y por eso también la más vulnerable si se deja con valores por defecto. SNMPv3 es la única que agrega autenticación real (usuario y contraseña) y cifrado del tráfico.",
+example:"Todos los comandos snmpwalk -v2c que usamos en el laboratorio usan la versión 2c, la más común — y por eso insistimos tanto en cambiar la community string: en v1/v2c esa cadena viaja sin cifrar."
+},
+puertos:{
+title:"🔌 Puertos SNMP: 161 y 162",
+text:"SNMP usa el protocolo UDP (no TCP) en dos puertos distintos: el puerto 161 es donde el AGENTE escucha las consultas del manager (polling); el puerto 162 es donde el MANAGER escucha los traps que le envían los agentes. Por eso un escaneo nmap -sU -p161 busca si el agente está activo y respondiendo.",
+example:"nmap -sU -p161 localhost te confirma si tu propio agente SNMP está escuchando en el puerto correcto antes de intentar consultarlo con snmpwalk."
+},
 snmp:{
 title:"📡 ¿Qué es SNMP?",
 text:"SNMP (Simple Network Management Protocol) es el protocolo estándar que usan los equipos de red (routers, switches, servidores) para reportar su estado y permitir que sean monitoreados o configurados de forma remota.",
@@ -548,12 +635,14 @@ example:"Ejemplo: se detectó que el agente SNMP de un switch sigue usando la co
 }
 };
 
+const ARQ_KEYS=["arquitectura","mib","oid","trap","versiones","puertos"];
 function showReview(key,btn){
-document.querySelectorAll('.review-step').forEach(b=>b.classList.remove('active'));
+document.querySelectorAll('.review-step, .review-card').forEach(b=>b.classList.remove('active'));
 if(btn) btn.classList.add('active');
 const d=reviewData[key];
-document.getElementById('reviewPanel').innerHTML=
-`<h3>${d.title}</h3><p>${d.text}</p><div class="example"><b>💡 Ejemplo claro:</b> ${d.example}</div>`;
+const html=`<h3>${d.title}</h3><p>${d.text}</p><div class="example"><b>💡 Ejemplo claro:</b> ${d.example}</div>`;
+const targetId=ARQ_KEYS.includes(key)?'reviewPanelArq':'reviewPanel';
+document.getElementById(targetId).innerHTML=html;
 }
 
 window.addEventListener("beforeunload",()=>{ if(company && !submitted) saveCurrentState(); });
