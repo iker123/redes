@@ -91,7 +91,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 <body>
 <div class="topbar"><div class="in">
 <div class="brandx">▍SOC_UDABOL<small>Laboratorio de Escaneo de Vulnerabilidades — Ing. Iver Guerrero Ortiz</small></div>
-<div class="headerscore" id="headerScore">PTS: --/21</div>
+<div class="headerscore" id="headerScore">PTS: --/20</div>
 </div></div>
 
 <div class="wrap">
@@ -99,11 +99,11 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 <section id="intro">
 <div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;sesion_soc.sh</div>
 <div class="panel">
-<span class="tag">AUDITORÍA DE SISTEMAS · TURNO DE ESCANEO</span>
+<span class="tag">REDES III · TURNO DE ESCANEO</span>
 <h1 class="big">Esta noche, cazas vulnerabilidades.</h1>
-<div class="note good" style="margin:10px 0">🖥️ <b>Esto es 100% simulado.</b> No estás escaneando ningún servidor real ni tu VM. Cada botón de comando ya trae escrita la salida que <b>nmap</b> o <b>nikto</b> darían en un caso real, para que practiques leer e interpretar resultados sin depender de tener la VM prendida ahora mismo. Lo que sí vas a correr de verdad en tu VM es la tarea de la diapositiva (mini-informe).</div>
-<p class="lead">Eres parte del equipo de auditoría del SOC. Van a llegarte alertas de distintos nodos de la red (ficticia, de práctica). Tu trabajo: entrar a cada nodo, hacer clic en los comandos de <b>nmap</b> y <b>nikto</b> correctos, leer la salida que aparece, decidir qué principio de seguridad falló (Confidencialidad, Integridad, Autenticación, Cifrado o Defensa en profundidad) y dejar tu reporte técnico antes de cerrar el turno.</p>
-<div class="note warn" style="margin-top:12px">⚠️ Este turno vale <b>21 puntos</b> y es independiente del <b>mini-informe</b> que te pidió el profesor sobre tu propia red (ese sigue siendo tarea aparte, con la plantilla de la diapositiva de la clase anterior).</div>
+<div class="note good" style="margin:10px 0">🖥️ <b>Esto es 100% simulado.</b> No estás escaneando ningún servidor real. Cada botón de comando ya trae escrita la salida que <b>nmap</b> o <b>nikto</b> darían en un caso real, para que practiques leer e interpretar resultados.</div>
+<p class="lead">Eres parte del equipo técnico de soporte de redes. Van a llegarte alertas de distintos nodos de la red (ficticia, de práctica). Tu trabajo: entrar a <b>un solo nodo</b>, hacer clic en los comandos de <b>nmap</b> y <b>nikto</b> correctos, leer la salida que aparece, decidir qué principio de seguridad falló (Confidencialidad, Integridad, Autenticación, Cifrado o Defensa en profundidad) y dejar tu reporte técnico antes de cerrar el turno.</p>
+<div class="note warn" style="margin-top:12px">⚠️ Este turno vale <b>20 puntos</b>.</div>
 <div class="grid2" style="margin-top:16px">
 <label><b>GRUPO_ID</b>
 <select id="groupName">
@@ -148,11 +148,11 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 
 <div class="panel noterm">
 <span class="tag">PUNTAJE DEL TURNO</span>
-<h2 style="font-size:22px;margin:8px 0">21 puntos</h2>
+<h2 style="font-size:22px;margin:8px 0">20 puntos</h2>
 <table class="rubric">
 <tr><th>Componente</th><th>Pts</th></tr>
 <tr><td>Pregunta rápida del nodo</td><td>1</td></tr>
-<tr><td>Comandos ejecutados (mínimo 3)</td><td>4</td></tr>
+<tr><td>Comandos ejecutados (mínimo 3)</td><td>3</td></tr>
 <tr><td>Categoría de riesgo identificada</td><td>4</td></tr>
 <tr><td>Comando de diagnóstico clave ejecutado</td><td>4</td></tr>
 <tr><td>Diagnóstico final correcto</td><td>4</td></tr>
@@ -250,7 +250,7 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 </section>
 
 </div>
-<footer>SOC UDABOL · Auditoría de Sistemas — Actividad práctica — 20 puntos · Docente: Ing. Iver Guerrero Ortiz</footer>
+<footer>SOC UDABOL · Redes de Computadoras III — Actividad práctica — 20 puntos · Docente: Ing. Iver Guerrero Ortiz</footer>
 
 <script>
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbEaHSR7xd0eG8PfX-CMq4T8Ry10Gf0EBfKpW82ZCMjpmMqLIUNZOdWp34USNtbT7a/exec";
@@ -281,7 +281,7 @@ defensa:{title:"E — Defensa en profundidad",text:"Usar varias capas de protecc
 };
 
 const nodes=[
-{id:"NODO-07",title:"🏭 Planta ANDES",tag:"FTP anónimo",meta:"Servidor de mantenimiento vía FTP",context:"La planta usa un servidor FTP (10.0.2.15) para que los proveedores suban manuales y reportes de mantenimiento. TI asegura que 'solo entra quien tiene la clave'.",incident:"🚨 ALERTA: Un auditor, conectado a la red interna autorizada, logró listar y descargar archivos del servidor FTP sin usar ninguna contraseña.",
+{id:"NODO-07",title:"🏭 Planta ANDES",tag:"FTP anónimo",meta:"Servidor de mantenimiento vía FTP",context:"La planta usa un servidor FTP (10.0.2.15) para que los proveedores suban manuales y reportes de mantenimiento. TI asegura que 'solo entra quien tiene la clave'.",incident:"🚨 ALERTA: Un técnico, conectado a la red interna autorizada, logró listar y descargar archivos del servidor FTP sin usar ninguna contraseña.",
 commands:[
 {label:"nmap -sV -p21 10.0.2.15",out:"PORT   STATE SERVICE VERSION\n21/tcp open  ftp     vsftpd 2.3.4",key:false},
 {label:"nmap --script ftp-anon -p21 10.0.2.15",out:"21/tcp open  ftp\n| ftp-anon: Anonymous FTP login allowed (FTP code 230)\n|_ drwxr-xr-x  2 ftp ftp  mantenimiento/\n\n[se pudo listar el contenido sin credenciales]",key:true},
@@ -291,8 +291,8 @@ commands:[
 {label:"cat /inventario/servidor_ftp.txt",out:"srv-ftp-mantenimiento: contiene manuales técnicos y credenciales de equipos de planta en texto plano.",key:false},
 {label:"nmap -sV --script vuln -p21 10.0.2.15",out:"21/tcp open  ftp  vsftpd 2.3.4\n| ftp-anon: Anonymous FTP login allowed\n|_ftp-vsftpd-backdoor: NOT VULNERABLE (esta versión no tiene la puerta trasera conocida)",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
-controls:["Autenticación / Autorización (AAA) — no se exige usuario ni contraseña para entrar.","Cifrado — los datos viajan sin protección por la red.","Integridad — el software del servidor está desactualizado.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"critico",
-quickQ:{prompt:"¿Qué hace nmap -sV además de decir que el puerto está abierto?",opts:["Intenta detectar la versión exacta del servicio que corre en ese puerto.","Borra el servicio FTP del servidor.","Cambia la contraseña del servidor FTP.","Bloquea el puerto para que nadie entre."],correct:0}},
+controls:["Cifrado — los datos viajan sin protección por la red.","Integridad — el software del servidor está desactualizado.","Autenticación / Autorización (AAA) — no se exige usuario ni contraseña para entrar.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:2,verdict:"critico",
+quickQ:{prompt:"¿Qué hace nmap -sV además de decir que el puerto está abierto?",opts:["Borra el servicio FTP del servidor.","Intenta detectar la versión exacta del servicio que corre en ese puerto.","Cambia la contraseña del servidor FTP.","Bloquea el puerto para que nadie entre."],correct:1}},
 
 {id:"NODO-12",title:"🏥 Hospital Red Vital",tag:"Apache desactualizado",meta:"Portal web de citas médicas",context:"El hospital expone un portal interno de citas en un servidor (10.0.2.22). TI dice que 'nunca se ha tocado porque funciona bien'.",incident:"🚨 ALERTA: Un escaneo de rutina encontró que el servidor web corre una versión de Apache de hace varios años, con vulnerabilidades públicas (CVE) ya conocidas.",
 commands:[
@@ -304,8 +304,8 @@ commands:[
 {label:"cat /docs/criticidad_sistemas.txt",out:"Portal de citas: clasificado como sistema de 'atención al paciente', expuesto a toda la red de la institución.",key:false},
 {label:"nmap -O 10.0.2.22",out:"Running: Linux 2.6.X\nOS details: CentOS release 5 (final) — sistema operativo también desactualizado",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
-controls:["Integridad — el software tiene vulnerabilidades conocidas (CVE) sin corregir.","Autenticación / Autorización (AAA) — faltan credenciales de acceso.","Confidencialidad — cualquiera puede leer archivos privados.","Cifrado — las contraseñas viajan sin protección."],controlCorrect:0,verdict:"critico",
-quickQ:{prompt:"¿Qué es un CVE?",opts:["Un identificador público de una vulnerabilidad ya conocida y documentada.","Un tipo de virus que borra archivos.","El nombre del protocolo que usa Apache.","Una contraseña por defecto del servidor."],correct:0}},
+controls:["Autenticación / Autorización (AAA) — faltan credenciales de acceso.","Integridad — el software tiene vulnerabilidades conocidas (CVE) sin corregir.","Confidencialidad — cualquiera puede leer archivos privados.","Cifrado — las contraseñas viajan sin protección."],controlCorrect:1,verdict:"critico",
+quickQ:{prompt:"¿Qué es un CVE?",opts:["Un tipo de virus que borra archivos.","El nombre del protocolo que usa Apache.","Una contraseña por defecto del servidor.","Un identificador público de una vulnerabilidad ya conocida y documentada."],correct:3}},
 
 {id:"NODO-23",title:"🏫 Colegio San Marcos",tag:"SMB sin autenticación",meta:"Carpetas compartidas entre profesores",context:"El colegio comparte materiales entre profesores mediante una carpeta de red (10.0.2.31). Administración dice que 'solo los profesores conocen la ruta'.",incident:"🚨 ALERTA: Un estudiante, conectado a la red escolar, encontró que podía ver y copiar todas las carpetas compartidas sin ingresar usuario ni contraseña.",
 commands:[
@@ -317,7 +317,7 @@ commands:[
 {label:"cat /inventario/carpetas_compartidas.txt",out:"Carpeta 'Calificaciones' contiene notas parciales de los tres cursos del colegio.",key:false},
 {label:"nmap -sV --script vuln -p445 10.0.2.31",out:"445/tcp open  microsoft-ds  Samba smbd 3.X\n| smb-vuln-ms17-010: ERROR (no se pudo confirmar, requiere más pruebas)",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
-controls:["Confidencialidad — cualquiera en la red puede leer archivos que no debería.","Integridad — el software de archivos está desactualizado.","Cifrado — los datos viajan sin protección.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"parcial",
+controls:["Integridad — el software de archivos está desactualizado.","Cifrado — los datos viajan sin protección.","Defensa en profundidad — falta más de una capa de protección.","Confidencialidad — cualquiera en la red puede leer archivos que no debería."],controlCorrect:3,verdict:"parcial",
 quickQ:{prompt:"¿Qué hace el script nmap smb-enum-shares?",opts:["Lista las carpetas compartidas por SMB y si piden usuario/contraseña.","Elimina las carpetas compartidas.","Cambia los permisos de las carpetas.","Apaga el servicio SMB."],correct:0}},
 
 {id:"NODO-31",title:"🏢 Oficinas Central Corp",tag:"NFS expuesto",meta:"Servidor de archivos entre departamentos",context:"La empresa usa un servidor de archivos NFS (10.0.2.40) para compartir documentos dentro de un mismo departamento.",incident:"🚨 ALERTA: TI reporta que una computadora de otro departamento, sin ningún permiso especial, logró montar y leer la carpeta de contratos del área legal.",
@@ -331,7 +331,7 @@ commands:[
 {label:"nmap -sn 10.0.2.0/24",out:"Nmap scan report for 10.0.2.40 — Host is up\n[confirma que el servidor NFS está activo en esa subred antes de seguir indagando]",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
 controls:["Defensa en profundidad — no hay restricción por red para acceder al recurso compartido.","Autenticación / Autorización (AAA) — no se exige usuario ni contraseña.","Cifrado — los datos viajan sin protección.","Integridad — el software de archivos está desactualizado."],controlCorrect:0,verdict:"parcial",
-quickQ:{prompt:"¿Qué muestra el comando showmount -e?",opts:["Qué carpetas exporta un servidor NFS y a quién se las exporta.","La contraseña del servidor NFS.","El historial de archivos borrados.","La versión del sistema operativo."],correct:0}},
+quickQ:{prompt:"¿Qué muestra el comando showmount -e?",opts:["La contraseña del servidor NFS.","El historial de archivos borrados.","Qué carpetas exporta un servidor NFS y a quién se las exporta.","La versión del sistema operativo."],correct:2}},
 
 {id:"NODO-44",title:"🛒 RetailPlus",tag:"Login sin cifrar",meta:"Panel de administración de cajas",context:"El panel de administración de las cajas registradoras se gestiona desde un navegador en la red interna de la tienda (10.0.2.55).",incident:"🚨 ALERTA: Un técnico, usando una herramienta de análisis de tráfico en la misma red, pudo ver el usuario y la contraseña del administrador mientras alguien iniciaba sesión.",
 commands:[
@@ -343,8 +343,8 @@ commands:[
 {label:"cat /inventario/panel_admin.txt",out:"Panel de administración: controla precios, descuentos y apertura de caja.",key:false},
 {label:"nmap -sV --script vuln -p80 10.0.2.55",out:"80/tcp open  http  nginx 1.14\n| http-csrf: POST /admin/login.php sin token CSRF visible",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
-controls:["Cifrado — las credenciales viajan en texto plano por la red.","Autenticación / Autorización (AAA) — no se exige usuario ni contraseña.","Confidencialidad — cualquiera puede leer archivos privados.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:0,verdict:"critico",
-quickQ:{prompt:"¿Por qué es un riesgo que un login use HTTP en vez de HTTPS?",opts:["Porque los datos (incluida la contraseña) viajan sin cifrar y pueden interceptarse.","Porque HTTP es más lento que HTTPS.","Porque HTTP no permite formularios.","Porque HTTP solo funciona en redes Wi-Fi."],correct:0}},
+controls:["Autenticación / Autorización (AAA) — no se exige usuario ni contraseña.","Confidencialidad — cualquiera puede leer archivos privados.","Cifrado — las credenciales viajan en texto plano por la red.","Defensa en profundidad — falta más de una capa de protección."],controlCorrect:2,verdict:"critico",
+quickQ:{prompt:"¿Por qué es un riesgo que un login use HTTP en vez de HTTPS?",opts:["Porque HTTP es más lento que HTTPS.","Porque los datos (incluida la contraseña) viajan sin cifrar y pueden interceptarse.","Porque HTTP no permite formularios.","Porque HTTP solo funciona en redes Wi-Fi."],correct:1}},
 
 {id:"NODO-59",title:"🏦 Banco Cooperativo",tag:"SNMP expuesto",meta:"Revisión de laboratorio de pruebas",context:"El banco realiza, en su laboratorio de pruebas autorizado, una revisión de los equipos de red antes de salir a producción.",incident:"🚨 ALERTA: Se encontró que un switch del laboratorio respondía a consultas SNMP usando la cadena de comunidad por defecto, sin ninguna restricción.",
 commands:[
@@ -356,8 +356,8 @@ commands:[
 {label:"cat /auditoria/hallazgo_interno.txt",out:"Registrado en el laboratorio de pruebas. En la próxima clase vamos a ver a fondo cómo funciona SNMP y por qué esto es tan común.",key:false},
 {label:"nmap -sV -p22,23,80 10.0.2.60",out:"PORT   STATE  SERVICE VERSION\n22/tcp open   ssh     OpenSSH 7.4\n23/tcp open   telnet  (sin cifrar)\n80/tcp closed http",key:false}],
 controlPrompt:"¿Qué categoría de riesgo está comprometida principalmente?",
-controls:["Autenticación / Autorización (AAA) — el servicio responde con credenciales por defecto.","Integridad — el software del switch está desactualizado.","Cifrado — los datos viajan sin protección.","Confidencialidad — cualquiera puede leer archivos privados."],controlCorrect:0,verdict:"parcial",
-quickQ:{prompt:"¿Qué es la 'community string' en SNMP?",opts:["Una clave de acceso simple (como \"public\") que, si no se cambia, deja ver la configuración del equipo.","El nombre del fabricante del switch.","La dirección IP del servidor SNMP.","Un tipo de cable de red."],correct:0}}
+controls:["Integridad — el software del switch está desactualizado.","Autenticación / Autorización (AAA) — el servicio responde con credenciales por defecto.","Cifrado — los datos viajan sin protección.","Confidencialidad — cualquiera puede leer archivos privados."],controlCorrect:1,verdict:"parcial",
+quickQ:{prompt:"¿Qué es la 'community string' en SNMP?",opts:["El nombre del fabricante del switch.","La dirección IP del servidor SNMP.","Un tipo de cable de red.","Una clave de acceso simple (como \"public\") que, si no se cambia, deja ver la configuración del equipo."],correct:3}}
 ];
 
 let name="",node=null,nodeIndex=null,opened=0,evidenceBonus=false,answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null,keyBonusGiven:false},score=0,submitted=false;
@@ -434,7 +434,7 @@ const cursorWasAt=term.querySelector(".cursor");if(cursorWasAt)cursorWasAt.paren
 term.appendChild(promptLine);term.appendChild(outLine);
 const newCursor=document.createElement("div");newCursor.className="ln out";newCursor.innerHTML=`$ <span class="cursor"></span>`;term.appendChild(newCursor);
 term.scrollTop=term.scrollHeight;
-if(opened>=3 && !evidenceBonus){evidenceBonus=true;score+=4;}
+if(opened>=3 && !evidenceBonus){evidenceBonus=true;score+=3;}
 saveCurrentState();updateBar();
 }
 function pickQuick(i,el){
@@ -497,7 +497,7 @@ submitted=true;
 const saved={started:true,submitted:true,group,name,nodeIndex,opened,evidenceBonus,answers,score,vals,payload};
 localStorage.setItem("socLab_"+group,JSON.stringify(saved));
 document.getElementById("finalIntro").textContent=`${group} · ${name} · ${node.title}`;
-document.getElementById("finalScore").textContent=`${score}/21`;
+document.getElementById("finalScore").textContent=`${score}/20`;
 document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD CRÍTICA":node.verdict==="parcial"?"🟡 RIESGO PARCIAL":"🟢 CORRECTAMENTE PROTEGIDO";
 document.getElementById("finalReview").innerHTML=buildFinalReview(vals);
 msg.className="note good";msg.textContent="✅ Reporte transmitido correctamente.";
@@ -551,7 +551,7 @@ function restoreSubmitted(saved){
 name=saved.name;nodeIndex=saved.nodeIndex;node=nodes[nodeIndex];opened=saved.opened||0;answers=saved.answers||answers;score=saved.score||0;
 document.getElementById("studentName").value=name;document.getElementById("groupName").value=saved.group;
 document.getElementById("finalIntro").textContent=`${saved.group} · ${name} · ${node.title}`;
-document.getElementById("finalScore").textContent=`${score}/21`;
+document.getElementById("finalScore").textContent=`${score}/20`;
 document.getElementById("finalVerdict").textContent=node.verdict==="critico"?"🔴 VULNERABILIDAD CRÍTICA":node.verdict==="parcial"?"🟡 RIESGO PARCIAL":"🟢 CORRECTAMENTE PROTEGIDO";
 document.getElementById("finalReview").innerHTML=buildFinalReview(saved.vals||["","","","",""]);
 show("final");
