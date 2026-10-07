@@ -101,8 +101,9 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 <div class="panel">
 <span class="tag">AUDITORÍA DE SISTEMAS · TURNO DE ESCANEO</span>
 <h1 class="big">Esta noche, cazas vulnerabilidades.</h1>
-<p class="lead">Eres parte del equipo de auditoría del SOC. Van a llegarte alertas de distintos nodos de la red. Tu trabajo: entrar a cada nodo, correr los comandos de <b>nmap</b> y <b>nikto</b> correctos desde la consola, leer la salida real, decidir qué principio de seguridad falló (Confidencialidad, Integridad, Autenticación, Cifrado o Defensa en profundidad) y dejar tu reporte técnico antes de cerrar el turno.</p>
-<div class="note warn" style="margin-top:12px">⚠️ Este turno vale <b>20 puntos</b> y es independiente del <b>mini-informe</b> que te pidió el profesor sobre tu propia red (ese sigue siendo tarea aparte, con la plantilla de la diapositiva de la clase anterior).</div>
+<div class="note good" style="margin:10px 0">🖥️ <b>Esto es 100% simulado.</b> No estás escaneando ningún servidor real ni tu VM. Cada botón de comando ya trae escrita la salida que <b>nmap</b> o <b>nikto</b> darían en un caso real, para que practiques leer e interpretar resultados sin depender de tener la VM prendida ahora mismo. Lo que sí vas a correr de verdad en tu VM es la tarea de la diapositiva (mini-informe).</div>
+<p class="lead">Eres parte del equipo de auditoría del SOC. Van a llegarte alertas de distintos nodos de la red (ficticia, de práctica). Tu trabajo: entrar a cada nodo, hacer clic en los comandos de <b>nmap</b> y <b>nikto</b> correctos, leer la salida que aparece, decidir qué principio de seguridad falló (Confidencialidad, Integridad, Autenticación, Cifrado o Defensa en profundidad) y dejar tu reporte técnico antes de cerrar el turno.</p>
+<div class="note warn" style="margin-top:12px">⚠️ Este turno vale <b>21 puntos</b> y es independiente del <b>mini-informe</b> que te pidió el profesor sobre tu propia red (ese sigue siendo tarea aparte, con la plantilla de la diapositiva de la clase anterior).</div>
 <div class="grid2" style="margin-top:16px">
 <label><b>GRUPO_ID</b>
 <select id="groupName">
@@ -119,37 +120,38 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 
 <div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_nmap_nikto</div>
 <div class="panel">
-<span class="tag">LECTURA OBLIGATORIA ANTES DEL TURNO</span>
-<h2 style="font-size:24px;margin:8px 0">Páginas de manual — nmap y nikto</h2>
-<p class="lead" style="font-size:14px">Haz clic en cada entrada para leer el manual antes de entrar a la consola. Esto es lo que vas a necesitar para interpretar la salida de los comandos.</p>
+<span class="tag">LECTURA RECOMENDADA ANTES DEL TURNO</span>
+<h2 style="font-size:24px;margin:8px 0">Conceptos clave: nmap y nikto</h2>
+<p class="lead" style="font-size:14px">Haz clic en cada tema para leer una explicación corta antes de entrar a la consola. Esto es lo que vas a necesitar para interpretar la salida de los comandos.</p>
 <div class="grid3" id="manList"></div>
-<div id="manPanel" class="note" style="margin-top:14px">$ man &lt;tema&gt; — selecciona una entrada arriba para leer su manual.</div>
+<div id="manPanel" class="note" style="margin-top:14px">Selecciona un tema arriba para ver su explicación.</div>
 </div>
 
-<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;man_categorias</div>
+<div class="termbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>&nbsp;categorias_riesgo</div>
 <div class="panel">
 <span class="tag">PRINCIPIOS DE SEGURIDAD · LO QUE YA VIMOS</span>
 <h2 style="font-size:24px;margin:8px 0">Las 5 categorías que vas a diagnosticar</h2>
 <div class="grid3" id="catList"></div>
-<div id="catPanel" class="note" style="margin-top:14px">$ man categoria &lt;nombre&gt; — selecciona una categoría arriba.</div>
+<div id="catPanel" class="note" style="margin-top:14px">Selecciona una categoría arriba para ver su explicación.</div>
 </div>
 
 <div class="panel noterm">
 <span class="tag">REGLAS DEL TURNO</span>
 <ul style="margin:12px 0 0;padding-left:18px;color:#bfe8cb;line-height:1.9;font-size:14px">
-<li>Cada nodo tiene varios comandos disponibles. Algunos dan evidencia útil, otros son solo contexto — léelos todos antes de decidir.</li>
-<li>Debes ejecutar al menos <b>3 comandos</b> antes de poder diagnosticar.</li>
-<li>Tu puntaje queda oculto hasta que cierres el turno (envíes el reporte).</li>
+<li>Cada nodo tiene varios comandos disponibles. Los que dicen <code>nmap</code>, <code>nikto</code>, <code>smbclient</code> o <code>snmpwalk</code> son los comandos de escaneo — esos sí dan evidencia técnica real.</li>
+<li>Los que empiezan con <code>cat archivo.txt</code> NO son de escaneo: <code>cat</code> es el comando de Linux para "mostrar el contenido de un archivo de texto". Aquí simulan documentos internos de la empresa (políticas, tickets) que te dan contexto para tu reporte, nada más.</li>
+<li>Debes ejecutar al menos <b>3 comandos</b> antes de poder diagnosticar (de cualquier tipo, escaneo o documento).</li>
+<li>Tu puntaje queda oculto hasta que cierres el turno (envíes el reporte). Si te equivocas en una pregunta de opción múltiple, puedes volver a hacer clic y cambiar tu respuesta las veces que quieras hasta enviar el reporte.</li>
 <li>Todos los comandos aquí corren contra equipos simulados de laboratorio (10.0.2.x). <b>Nunca</b> se ejecutan así contra la red real de la UDABOL ni contra sistemas que no te pertenecen.</li>
 </ul>
 </div>
 
 <div class="panel noterm">
 <span class="tag">PUNTAJE DEL TURNO</span>
-<h2 style="font-size:22px;margin:8px 0">20 puntos (+1 bonus)</h2>
+<h2 style="font-size:22px;margin:8px 0">21 puntos</h2>
 <table class="rubric">
 <tr><th>Componente</th><th>Pts</th></tr>
-<tr><td>Pregunta rápida del nodo (bonus)</td><td>1</td></tr>
+<tr><td>Pregunta rápida del nodo</td><td>1</td></tr>
 <tr><td>Comandos ejecutados (mínimo 3)</td><td>4</td></tr>
 <tr><td>Categoría de riesgo identificada</td><td>4</td></tr>
 <tr><td>Comando de diagnóstico clave ejecutado</td><td>4</td></tr>
@@ -183,8 +185,9 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 </div>
 
 <div class="panel noterm">
-<span class="tag">PREGUNTA RÁPIDA · +1 PUNTO BONUS</span>
+<span class="tag">PREGUNTA RÁPIDA · VALE 1 PUNTO</span>
 <h2 style="font-size:19px;margin:8px 0" id="quickPrompt"></h2>
+<p class="muted" style="font-size:12px;margin:0 0 8px">Puedes cambiar tu respuesta las veces que quieras antes de enviar el reporte.</p>
 <div class="optmenu" id="quickOptions"></div>
 </div>
 
@@ -253,21 +256,21 @@ footer{text-align:center;color:var(--muted);font-size:11.5px;padding:24px 0 10px
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwbEaHSR7xd0eG8PfX-CMq4T8Ry10Gf0EBfKpW82ZCMjpmMqLIUNZOdWp34USNtbT7a/exec";
 
 const manData = {
-escaneo:{title:"man nmap_basico",text:"Nmap descubre qué puertos están abiertos en un equipo y qué servicio corre en cada uno. -p elige el puerto a revisar, -sV intenta detectar la versión exacta del servicio.",ex:"nmap -sV -p80 10.0.2.22  → dice que el puerto 80 está abierto y qué versión de servidor web corre ahí."},
-scripts:{title:"man nse",text:"El Nmap Scripting Engine (NSE) ejecuta pruebas adicionales sobre un puerto: desde listar archivos compartidos hasta revisar configuraciones inseguras conocidas. Se activa con --script <nombre>.",ex:"nmap --script ftp-anon -p21 10.0.2.15 revisa específicamente si el servidor FTP permite acceso anónimo."},
-nikto:{title:"man nikto",text:"Nikto es un escáner especializado en servidores web: revisa versiones desactualizadas, archivos peligrosos expuestos, configuraciones por defecto y cabeceras de seguridad faltantes.",ex:"nikto -h http://10.0.2.22 analiza el sitio completo y lista cada hallazgo con un '+'."},
-cve:{title:"man cve",text:"Un CVE (Common Vulnerabilities and Exposures) es un identificador público y único para una vulnerabilidad conocida de un software. Si una herramienta detecta una versión con CVE, ya existe una forma documentada de explotarla.",ex:"Apache 2.2.3 tiene varios CVE publicados — por eso Nikto lo marca como 'outdated' automáticamente."},
-compartidos:{title:"man recursos_compartidos",text:"Protocolos como FTP, SMB y NFS permiten compartir archivos entre equipos. Si no exigen usuario y contraseña, o no restringen por IP, cualquiera en la red puede leer — o incluso modificar — esos archivos.",ex:"showmount -e 10.0.2.40 muestra qué carpetas exporta un servidor NFS y a quién se las exporta."},
-principios:{title:"man principios_seguridad",text:"Lo que ya vimos en clases anteriores: CIA (Confidencialidad, Integridad, Disponibilidad), AAA (Autenticación, Autorización, Auditoría) y Defensa en Profundidad (varias capas de protección, no solo una). Hoy usas estos mismos principios para clasificar lo que encuentres.",ex:"Si un panel de administración no usa HTTPS, estás viendo una falla de Cifrado dentro del principio de Confidencialidad."},
-osscan:{title:"man nmap_os",text:"-O le pide a nmap que intente adivinar el sistema operativo del equipo analizando cómo responde su red. Un sistema operativo viejo sin parches es, en sí mismo, un riesgo de Integridad.",ex:"nmap -O 10.0.2.22 → dice que el equipo corre una versión de Linux/CentOS de hace varios años."},
-vulnscript:{title:"man nmap_vuln",text:"--script vuln ejecuta de una sola vez varias pruebas que buscan vulnerabilidades conocidas (CVE) en los servicios detectados. Es más lento, pero da una foto más completa que un solo script suelto.",ex:"nmap -sV --script vuln -p445 10.0.2.31 revisa varias fallas conocidas de SMB en un solo comando."},
-sscan:{title:"man nmap_syn (para practicar en casa)",text:"-sS hace un escaneo SYN ('sigiloso'): envía solo el primer paquete de la conexión sin completarla. Es el que más usan los profesionales, pero necesita permisos de administrador (sudo).",ex:"sudo nmap -sS 10.0.2.15 revisa los puertos sin completar la conexión TCP."},
-allports:{title:"man nmap_allports (para practicar en casa)",text:"-p- revisa los 65535 puertos posibles, no solo los más comunes. Más lento, pero puede encontrar servicios escondidos en puertos poco usuales.",ex:"nmap -p- 10.0.2.15 revisa absolutamente todos los puertos, puede tardar varios minutos."},
-pn:{title:"man nmap_pn (para practicar en casa)",text:"-Pn le dice a nmap que no verifique primero si el equipo 'responde a ping' — intenta los puertos directamente. Sirve cuando un firewall bloquea el ping pero el equipo sigue activo.",ex:"nmap -Pn 10.0.2.15 revisa los puertos aunque el equipo no responda ping."},
-aggressive:{title:"man nmap_agresivo -A (para practicar en casa)",text:"-A combina en un solo comando detección de versión (-sV), sistema operativo (-O), scripts básicos y traceroute. Buen 'resumen completo' para repasar en casa.",ex:"nmap -A 10.0.2.15 da casi toda la información relevante de un equipo en un solo comando."},
-traceroute:{title:"man traceroute (para practicar en casa)",text:"Muestra el camino (los routers intermedios) que siguen los paquetes hasta llegar al destino. Ayuda a entender cómo está conectada tu propia red.",ex:"traceroute 8.8.8.8 (o tracert en Windows) muestra cada salto hasta llegar a ese servidor."},
-toplist:{title:"man nmap_topports (para practicar en casa)",text:"--top-ports N revisa solo los N puertos más usados en general, para un escaneo rápido en vez de revisar todos.",ex:"nmap --top-ports 20 10.0.2.15 revisa solo los 20 puertos más comunes."},
-niktotuning:{title:"man nikto_tuning (para practicar en casa)",text:"-Tuning 9 activa todas las categorías de prueba de Nikto a la vez. Da un reporte más completo contra un sitio de pruebas autorizado.",ex:"nikto -h http://testasp.vulnweb.com -Tuning 9 revisa todas las categorías de Nikto."}
+escaneo:{title:"Nmap básico: puertos y versión (-sV)",text:"Nmap descubre qué puertos están abiertos en un equipo y qué servicio corre en cada uno. -p elige el puerto a revisar, -sV intenta detectar la versión exacta del servicio.",ex:"nmap -sV -p80 10.0.2.22  → dice que el puerto 80 está abierto y qué versión de servidor web corre ahí."},
+scripts:{title:"Scripts de Nmap (NSE)",text:"El Nmap Scripting Engine (NSE) ejecuta pruebas adicionales sobre un puerto: desde listar archivos compartidos hasta revisar configuraciones inseguras conocidas. Se activa con --script <nombre>.",ex:"nmap --script ftp-anon -p21 10.0.2.15 revisa específicamente si el servidor FTP permite acceso anónimo."},
+nikto:{title:"Nikto: escaneo de servidores web",text:"Nikto es un escáner especializado en servidores web: revisa versiones desactualizadas, archivos peligrosos expuestos, configuraciones por defecto y cabeceras de seguridad faltantes.",ex:"nikto -h http://10.0.2.22 analiza el sitio completo y lista cada hallazgo con un '+'."},
+cve:{title:"¿Qué es un CVE?",text:"Un CVE (Common Vulnerabilities and Exposures) es un identificador público y único para una vulnerabilidad conocida de un software. Si una herramienta detecta una versión con CVE, ya existe una forma documentada de explotarla.",ex:"Apache 2.2.3 tiene varios CVE publicados — por eso Nikto lo marca como 'outdated' automáticamente."},
+compartidos:{title:"Recursos compartidos: FTP, SMB, NFS",text:"Protocolos como FTP, SMB y NFS permiten compartir archivos entre equipos. Si no exigen usuario y contraseña, o no restringen por IP, cualquiera en la red puede leer — o incluso modificar — esos archivos.",ex:"showmount -e 10.0.2.40 muestra qué carpetas exporta un servidor NFS y a quién se las exporta."},
+principios:{title:"Principios de seguridad (repaso)",text:"Lo que ya vimos en clases anteriores: CIA (Confidencialidad, Integridad, Disponibilidad), AAA (Autenticación, Autorización, Auditoría) y Defensa en Profundidad (varias capas de protección, no solo una). Hoy usas estos mismos principios para clasificar lo que encuentres.",ex:"Si un panel de administración no usa HTTPS, estás viendo una falla de Cifrado dentro del principio de Confidencialidad."},
+osscan:{title:"Detección de sistema operativo (-O)",text:"-O le pide a nmap que intente adivinar el sistema operativo del equipo analizando cómo responde su red. Un sistema operativo viejo sin parches es, en sí mismo, un riesgo de Integridad.",ex:"nmap -O 10.0.2.22 → dice que el equipo corre una versión de Linux/CentOS de hace varios años."},
+vulnscript:{title:"Búsqueda de vulnerabilidades (--script vuln)",text:"--script vuln ejecuta de una sola vez varias pruebas que buscan vulnerabilidades conocidas (CVE) en los servicios detectados. Es más lento, pero da una foto más completa que un solo script suelto.",ex:"nmap -sV --script vuln -p445 10.0.2.31 revisa varias fallas conocidas de SMB en un solo comando."},
+sscan:{title:"Escaneo SYN -sS (para practicar en casa)",text:"-sS hace un escaneo SYN ('sigiloso'): envía solo el primer paquete de la conexión sin completarla. Es el que más usan los profesionales, pero necesita permisos de administrador (sudo).",ex:"sudo nmap -sS 10.0.2.15 revisa los puertos sin completar la conexión TCP."},
+allports:{title:"Todos los puertos -p- (para practicar en casa)",text:"-p- revisa los 65535 puertos posibles, no solo los más comunes. Más lento, pero puede encontrar servicios escondidos en puertos poco usuales.",ex:"nmap -p- 10.0.2.15 revisa absolutamente todos los puertos, puede tardar varios minutos."},
+pn:{title:"Sin verificar ping -Pn (para practicar en casa)",text:"-Pn le dice a nmap que no verifique primero si el equipo 'responde a ping' — intenta los puertos directamente. Sirve cuando un firewall bloquea el ping pero el equipo sigue activo.",ex:"nmap -Pn 10.0.2.15 revisa los puertos aunque el equipo no responda ping."},
+aggressive:{title:"Escaneo agresivo -A (para practicar en casa)",text:"-A combina en un solo comando detección de versión (-sV), sistema operativo (-O), scripts básicos y traceroute. Buen 'resumen completo' para repasar en casa.",ex:"nmap -A 10.0.2.15 da casi toda la información relevante de un equipo en un solo comando."},
+traceroute:{title:"Traceroute (para practicar en casa)",text:"Muestra el camino (los routers intermedios) que siguen los paquetes hasta llegar al destino. Ayuda a entender cómo está conectada tu propia red.",ex:"traceroute 8.8.8.8 (o tracert en Windows) muestra cada salto hasta llegar a ese servidor."},
+toplist:{title:"Puertos más comunes --top-ports (para practicar en casa)",text:"--top-ports N revisa solo los N puertos más usados en general, para un escaneo rápido en vez de revisar todos.",ex:"nmap --top-ports 20 10.0.2.15 revisa solo los 20 puertos más comunes."},
+niktotuning:{title:"Nikto completo -Tuning 9 (para practicar en casa)",text:"-Tuning 9 activa todas las categorías de prueba de Nikto a la vez. Da un reporte más completo contra un sitio de pruebas autorizado.",ex:"nikto -h http://testasp.vulnweb.com -Tuning 9 revisa todas las categorías de Nikto."}
 };
 const categoriaData = {
 confid:{title:"A — Confidencialidad",text:"Evitar que personas no autorizadas accedan a información o recursos que no les corresponden.",ex:"Un estudiante puede leer la carpeta de calificaciones de otro curso sin ningún permiso especial."},
@@ -357,7 +360,7 @@ controls:["Autenticación / Autorización (AAA) — el servicio responde con cre
 quickQ:{prompt:"¿Qué es la 'community string' en SNMP?",opts:["Una clave de acceso simple (como \"public\") que, si no se cambia, deja ver la configuración del equipo.","El nombre del fabricante del switch.","La dirección IP del servidor SNMP.","Un tipo de cable de red."],correct:0}}
 ];
 
-let name="",node=null,nodeIndex=null,opened=0,evidenceBonus=false,answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null},score=0,submitted=false;
+let name="",node=null,nodeIndex=null,opened=0,evidenceBonus=false,answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null,keyBonusGiven:false},score=0,submitted=false;
 
 function show(id){["intro","choose","mission","final"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 
@@ -388,7 +391,7 @@ document.getElementById("nodes").innerHTML=nodes.map((n,i)=>`<div class="node" o
 }
 function selectNode(i){
 nodeIndex=i;node=nodes[i];score=0;opened=0;evidenceBonus=false;
-answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null};
+answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null,keyBonusGiven:false};
 saveState({started:true,submitted:false,group:document.getElementById("groupName").value,name,nodeIndex:i,opened,evidenceBonus,answers,score});
 renderMission();show("mission");
 }
@@ -396,7 +399,7 @@ function changeNode(){
 if(submitted) return;
 if(!confirm("¿Volver a elegir otro nodo? El progreso de este nodo no está enviado, así que se perderá si no vuelves a él.")) return;
 node=null;nodeIndex=null;opened=0;evidenceBonus=false;
-answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null};
+answers={control:false,verdict:false,controlIndex:null,verdictValue:null,quick:false,quickIndex:null,keyBonusGiven:false};
 renderNodes();show("choose");
 }
 function renderMission(){
@@ -435,24 +438,32 @@ if(opened>=3 && !evidenceBonus){evidenceBonus=true;score+=4;}
 saveCurrentState();updateBar();
 }
 function pickQuick(i,el){
-if(answers.quick)return;
-answers.quick=true;answers.quickIndex=i;el.classList.add("selected");
+if(answers.quick && answers.quickIndex===i)return;
+if(answers.quick && answers.quickIndex===node.quickQ.correct)score-=1;
+answers.quick=true;answers.quickIndex=i;
+document.querySelectorAll("#quickOptions .opt").forEach(o=>o.classList.remove("selected"));el.classList.add("selected");
 if(i===node.quickQ.correct)score+=1;
 saveCurrentState();updateBar();
 }
 function pickControl(i,el){
-if(answers.control)return;
 if(opened<3){alert("Ejecuta al menos 3 comandos antes de diagnosticar.");return}
-answers.control=true;answers.controlIndex=i;el.classList.add("selected");
+if(answers.control && answers.controlIndex===i)return;
+if(answers.control && answers.controlIndex===node.controlCorrect)score-=4;
+answers.control=true;answers.controlIndex=i;
+document.querySelectorAll("#controlOptions .opt").forEach(o=>o.classList.remove("selected"));el.classList.add("selected");
 if(i===node.controlCorrect)score+=4;
+if(!answers.keyBonusGiven){
 const keyRan=node.commands.some((c,idx)=>c.key && document.getElementById("cmdbtn"+idx).classList.contains("done"));
-if(keyRan)score+=4;
+if(keyRan){score+=4;answers.keyBonusGiven=true;}
+}
 saveCurrentState();updateBar();
 }
 function pickVerdict(v,el){
-if(answers.verdict)return;
 if(!answers.control){alert("Primero identifica la categoría de riesgo.");return}
-answers.verdict=true;answers.verdictValue=v;el.classList.add("selected");
+if(answers.verdict && answers.verdictValue===v)return;
+if(answers.verdict && answers.verdictValue===node.verdict)score-=4;
+answers.verdict=true;answers.verdictValue=v;
+document.querySelectorAll("#verdictOptions .opt").forEach(o=>o.classList.remove("selected"));el.classList.add("selected");
 if(v===node.verdict)score+=4;
 saveCurrentState();updateBar();
 }
